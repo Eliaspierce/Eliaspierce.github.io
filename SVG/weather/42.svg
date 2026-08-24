@@ -1,0 +1,19 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
+     width="64px" height="64px" viewBox="0 0 64 64" xml:space="preserve">
+  <g fill="#4A90E2">
+    <!-- Cloud Base -->
+    <path d="M46 28c-.5 0-1 .1-1.4.3C43.2 24.8 39.8 22 35.5 22c-3.7 0-6.8 2.4-7.8 5.7C26.5 27.2 25.8 27 25 27c-5 0-9 4-9 9 0 4.6 3.5 8.4 8 8.9v.1h22c4.4-.5 8-4.1 8-8.5 0-4.6-3.7-8.5-8.4-8.5z"/>
+  </g>
+  <!-- Heavy Snowflakes -->
+  <g fill="#00AAFF">
+    <!-- Snowflake 1 -->
+    <path d="M24 46l2-2v-3l-2-2-2 2v3l2 2z M24 41v-3"/>
+    <!-- Snowflake 2 -->
+    <path d="M32 52l2-2v-3l-2-2-2 2v3l2 2z M32 47v-3"/>
+    <!-- Snowflake 3 -->
+    <path d="M40 46l2-2v-3l-2-2-2 2v3l2 2z M40 41v-3"/>
+    <!-- Additional dense flakes for "heavy" condition -->
+    <path d="M28 56l1.5-1.5v-2L28 51l-1.5 1.5v2L28 56z"/>
+    <path d="M36 56l1.5-1.5v-2L36 51l-1.5 1.5v2L36 56z"/>
+  </g>
+</svg>
