@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Cloud Path -->
+  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" fill="#E0F2FE" stroke="#0284C7"/>
+  <!-- Ice / Hail Crystals -->
+  <path d="M8 14v3M8 17l1-1M8 17l-1-1" stroke="#0284C7"/>
+  <path d="M12 15v3M12 18l1-1M12 18l-1-1" stroke="#0284C7"/>
+  <path d="M16 14v3M16 17l1-1M16 17l-1-1" stroke="#0284C7"/>
+</svg>
