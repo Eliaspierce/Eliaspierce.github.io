@@ -1,26 +1,11 @@
-<svg xmlns="http://w3.org" viewBox="0 0 64 64" width="64" height="64">
-  <defs>
-    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFD54F" />
-      <stop offset="100%" stop-color="#FFB300" />
-    </linearGradient>
-    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#B0BEC5" />
-      <stop offset="100%" stop-color="#90A4AE" />
-    </linearGradient>
-    <linearGradient id="cloudFront" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ECEFF1" />
-      <stop offset="100%" stop-color="#CFD8DC" />
-    </linearGradient>
-  </defs>
+<svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://w3.org">
   <!-- Sun -->
-  <circle cx="24" cy="22" r="10" fill="url(#sunGrad)" />
-  <!-- Raindrops -->
-  <line x1="22" y1="50" x2="20" y2="56" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round" />
-  <line x1="32" y1="52" x2="30" y2="58" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round" />
-  <line x1="42" y1="50" x2="40" y2="56" stroke="#42A5F5" stroke-width="2.5" stroke-linecap="round" />
-  <!-- Back Cloud -->
-  <path d="M26 30 h15 a7 7 0 0 0 0 -14 a9 9 0 0 0 -17 2 a6 6 0 0 0 -2 12 z" fill="url(#cloudGrad)" />
-  <!-- Front Cloud -->
-  <path d="M22 36 h22 a6 6 0 0 0 0 -12 a7 7 0 0 0 -13 -2 a8 8 0 0 0 -13 3 a6 6 0 0 0 4 11 z" fill="url(#cloudFront)" />
+  <circle cx="24" cy="22" r="10" fill="#FFAA00" />
+  
+  <!-- Cloud -->
+  <path d="M44 32a10 10 0 0 0-18.3-5 8 8 0 0 0-12.7 6.6A8 8 0 0 0 16 46h28a10 10 0 0 0 0-20z" fill="#90A4AE" />
+  
+  <!-- Rain Drops -->
+  <line x1="24" y1="50" x2="21" y2="58" stroke="#00BCD4" stroke-width="3" stroke-linecap="round" />
+  <line x1="34" y1="50" x2="31" y2="58" stroke="#00BCD4" stroke-width="3" stroke-linecap="round" />
 </svg>
