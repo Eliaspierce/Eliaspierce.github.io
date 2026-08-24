@@ -1,0 +1,15 @@
+<svg xmlns="http://w3.org" viewBox="0 0 64 64" width="100%" height="100%">
+  <!-- Sun -->
+  <circle cx="22" cy="22" r="10" fill="#FFAA00" />
+  <path d="M22 8 L22 4 M22 40 L22 36 M8 22 L4 22 M40 22 L36 22 M12 12 L9 9 M35 35 L32 32 M12 32 L9 35 M35 9 L32 12" 
+        stroke="#FFAA00" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Cloud -->
+  <path d="M42 34 C42 29.6 38.4 26 34 26 C31.4 26 29.1 27.2 27.7 29.1 C26.7 28.4 25.5 28 24.1 28 C20.7 28 18 30.7 18 34.1 C18 34.5 18 34.9 18.1 35.2 C15.3 36.1 13.3 38.7 13.3 41.8 C13.3 45.8 16.5 49 20.5 49 L40.5 49 C44.1 49 47 46.1 47 42.5 C47 39.3 44.8 36.6 41.8 35.8 C42 35.2 42 34.6 42 34 Z" 
+        fill="#E0E0E0" stroke="#B0B0B0" stroke-width="2" />
+
+  <!-- Raindrops -->
+  <line x1="24" y1="53" x2="22" y2="59" stroke="#00AAFF" stroke-width="3" stroke-linecap="round" />
+  <line x1="32" y1="53" x2="30" y2="59" stroke="#00AAFF" stroke-width="3" stroke-linecap="round" />
+  <line x1="40" y1="53" x2="38" y2="59" stroke="#00AAFF" stroke-width="3" stroke-linecap="round" />
+</svg>
