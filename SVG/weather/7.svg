@@ -1,0 +1,10 @@
+<svg xmlns="http://w3.org" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#4A90E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Cloud Shape -->
+  <path d="M46 26a12 12 0 0 0-22-4 10 10 0 0 0-14 9c-4 1-7 5-7 10a10 10 0 0 0 10 10h35a10 10 0 0 0 8-10 10 10 0 0 0-12-5z" fill="#E0F2FE" stroke="#2563EB" stroke-width="2"/>
+  <!-- Raindrop (Left) -->
+  <path d="M22 46c0 3-2 5-3 5s-3-2-3-5 3-6 3-6 3 3 3 6z" fill="#3B82F6" stroke="none"/>
+  <!-- Snowflake (Right) -->
+  <g transform="translate(38, 44) scale(0.6)">
+    <path d="M0 -8v16M-7 -4l14 8M-7 4l14 -8" stroke="#0284C7" stroke-width="2.5"/>
+  </g>
+</svg>
