@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-  <path d="M16 17h5" />
-  <path d="M8 21h8" />
-  <path d="M10 17h1" />
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Cloud Shape -->
+  <path d="M46 28a12 12 0 0 0-22.6-5.2A10 10 0 0 0 14 32a10 10 0 0 0 10 10h22a10 10 0 0 0 0-20z" fill="#ffffff" fill-opacity="0.1"/>
+  <path d="M46 28a12 12 0 0 0-22.6-5.2A10 10 0 0 0 14 32a10 10 0 0 0 10 10h22a10 10 0 0 0 0-20z"/>
+  <!-- Fog Lines -->
+  <line x1="16" y1="48" x2="48" y2="48"/>
+  <line x1="22" y1="55" x2="42" y2="55"/>
 </svg>
