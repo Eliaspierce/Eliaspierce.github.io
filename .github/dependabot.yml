@@ -4,9 +4,10 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
-updates:
-  # Remove the npm section if it exists:
-  # - package-ecosystem: "npm"
-  #   directory: "/"
-  #   schedule:
-  #     interval: "weekly"
+updates: {
+  Remove the npm section if it exists:
+  - package-ecosystem: "npm"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+}
