@@ -8,6 +8,7 @@ updates: {
   Remove the npm section if it exists:
   package-ecosystem: "npm"
   directory: "/"
-  schedule:
+  schedule: {
     interval: "weekly"
+  }
 }
