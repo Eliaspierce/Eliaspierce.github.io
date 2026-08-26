@@ -1,9 +1,0 @@
-{
-  "name": "eliaspierce-blog",
-  "version": "1.0.0",
-  "description": "My personal blog",
-  "private": true,
-  "dependencies": {
-    // Add your dependencies here
-  }
-}
