@@ -1,19 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
-  <!-- Sun Rays & Body -->
-  <g fill="#f59e0b">
-    <circle cx="32" cy="28" r="12" />
-    <rect x="30" y="8" width="4" height="4" rx="2" />
-    <rect x="30" y="44" width="4" height="4" rx="2" />
-    <rect x="12" y="26" width="4" height="4" rx="2" />
-    <rect x="48" y="26" width="4" height="4" rx="2" />
-    <rect x="18" y="14" width="4" height="4" rx="2" transform="rotate(-45 20 16)" />
-    <rect x="42" y="38" width="4" height="4" rx="2" transform="rotate(-45 44 40)" />
-    <rect x="18" y="38" width="4" height="4" rx="2" transform="rotate(45 20 40)" />
-    <rect x="42" y="14" width="4" height="4" rx="2" transform="rotate(45 44 16)" />
+<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .sun-core {
+        transform-origin: 32px 32px;
+        animation: pulse 4s ease-in-out infinite;
+      }
+      .sun-rays {
+        transform-origin: 32px 32px;
+        animation: spin 20s linear infinite;
+      }
+      .haze-line {
+        stroke-dasharray: 40;
+        animation: drift 3s ease-in-out infinite alternate;
+      }
+      .haze-line-delayed {
+        animation-delay: 1.5s;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(0.95); opacity: 0.9; }
+        50% { transform: scale(1.05); opacity: 1; }
+      }
+      @keyframes drift {
+        0% { transform: translateX(-3px); }
+        100% { transform: translateX(3px); }
+      }
+    </style>
+    <g id="ray">
+      <line x1="32" y1="8" x2="32" y2="12" stroke="#F59E0B" stroke-width="3" stroke-linecap="round" />
+    </g>
+  </defs>
+  <g class="sun-rays">
+    <use href="#ray" transform="rotate(0 32 32)" />
+    <use href="#ray" transform="rotate(45 32 32)" />
+    <use href="#ray" transform="rotate(90 32 32)" />
+    <use href="#ray" transform="rotate(135 32 32)" />
+    <use href="#ray" transform="rotate(180 32 32)" />
+    <use href="#ray" transform="rotate(225 32 32)" />
+    <use href="#ray" transform="rotate(270 32 32)" />
+    <use href="#ray" transform="rotate(315 32 32)" />
   </g>
-  <!-- Haze Bars -->
-  <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round" opacity="0.8">
-    <line x1="16" y1="48" x2="48" y2="48" />
-    <line x1="20" y1="55" x2="44" y2="55" />
+  <circle class="sun-core" cx="32" cy="32" r="10" fill="#F59E0B" />
+  <g stroke="#94A3B8" stroke-width="3" stroke-linecap="round" opacity="0.8">
+    <line class="haze-line" x1="16" y1="44" x2="48" y2="44" />
+    <line class="haze-line haze-line-delayed" x1="12" y1="50" x2="52" y2="50" />
+    <line class="haze-line" x1="20" y1="56" x2="44" y2="56" />
   </g>
 </svg>
