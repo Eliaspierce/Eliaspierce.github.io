@@ -1,19 +1,54 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
-     width="64px" height="64px" viewBox="0 0 64 64" xml:space="preserve">
-  <g fill="#4A90E2">
-    <!-- Cloud Base -->
-    <path d="M46 28c-.5 0-1 .1-1.4.3C43.2 24.8 39.8 22 35.5 22c-3.7 0-6.8 2.4-7.8 5.7C26.5 27.2 25.8 27 25 27c-5 0-9 4-9 9 0 4.6 3.5 8.4 8 8.9v.1h22c4.4-.5 8-4.1 8-8.5 0-4.6-3.7-8.5-8.4-8.5z"/>
-  </g>
-  <!-- Heavy Snowflakes -->
-  <g fill="#00AAFF">
-    <!-- Snowflake 1 -->
-    <path d="M24 46l2-2v-3l-2-2-2 2v3l2 2z M24 41v-3"/>
-    <!-- Snowflake 2 -->
-    <path d="M32 52l2-2v-3l-2-2-2 2v3l2 2z M32 47v-3"/>
-    <!-- Snowflake 3 -->
-    <path d="M40 46l2-2v-3l-2-2-2 2v3l2 2z M40 41v-3"/>
-    <!-- Additional dense flakes for "heavy" condition -->
-    <path d="M28 56l1.5-1.5v-2L28 51l-1.5 1.5v2L28 56z"/>
-    <path d="M36 56l1.5-1.5v-2L36 51l-1.5 1.5v2L36 56z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%" style="background: #0f172a;">
+  <defs>
+    <style>
+      .snowflake {
+        fill: #ffffff;
+        opacity: 0.8;
+        animation: fall linear infinite;
+      }
+      .sf-1  { animation-duration: 1.2s; animation-delay: 0.1s; }
+      .sf-2  { animation-duration: 0.9s; animation-delay: 0.4s; }
+      .sf-3  { animation-duration: 1.5s; animation-delay: 0.2s; }
+      .sf-4  { animation-duration: 1.0s; animation-delay: 0.7s; }
+      .sf-5  { animation-duration: 0.8s; animation-delay: 0.3s; }
+      .sf-6  { animation-duration: 1.3s; animation-delay: 0.5s; }
+      .sf-7  { animation-duration: 1.1s; animation-delay: 0.9s; }
+      .sf-8  { animation-duration: 0.7s; animation-delay: 0.2s; }
+      @keyframes fall {
+        0% {
+          transform: translateY(-20px) translateX(0);
+        }
+        50% {
+          transform: translateY(310px) translateX(15px);
+        }
+        100% {
+          transform: translateY(620px) translateX(-10px);
+        }
+      }
+    </style>
+    <circle id="dot" r="3" />
+    <circle id="flake" r="5" opacity="0.9" />
+  </defs>
+  <g>
+    <use href="#flake" class="snowflake sf-1" x="50" />
+    <use href="#dot"   class="snowflake sf-2" x="120" />
+    <use href="#flake" class="snowflake sf-3" x="200" />
+    <use href="#dot"   class="snowflake sf-4" x="280" />
+    <use href="#flake" class="snowflake sf-5" x="350" />
+    <use href="#dot"   class="snowflake sf-6" x="420" />
+    <use href="#flake" class="snowflake sf-7" x="500" />
+    <use href="#dot"   class="snowflake sf-8" x="580" />
+    <use href="#flake" class="snowflake sf-2" x="650" />
+    <use href="#dot"   class="snowflake sf-1" x="720" />
+    <use href="#dot"   class="snowflake sf-3" x="90" />
+    <use href="#flake" class="snowflake sf-6" x="160" />
+    <use href="#dot"   class="snowflake sf-8" x="240" />
+    <use href="#flake" class="snowflake sf-4" x="310" />
+    <use href="#dot"   class="snowflake sf-1" x="390" />
+    <use href="#flake" class="snowflake sf-5" x="470" />
+    <use href="#dot"   class="snowflake sf-7" x="540" />
+    <use href="#flake" class="snowflake sf-2" x="610" />
+    <use href="#dot"   class="snowflake sf-4" x="690" />
+    <use href="#flake" class="snowflake sf-8" x="760" />
   </g>
 </svg>
