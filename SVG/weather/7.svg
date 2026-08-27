@@ -1,10 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none" stroke="#4A90E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Cloud Shape -->
-  <path d="M46 26a12 12 0 0 0-22-4 10 10 0 0 0-14 9c-4 1-7 5-7 10a10 10 0 0 0 10 10h35a10 10 0 0 0 8-10 10 10 0 0 0-12-5z" fill="#E0F2FE" stroke="#2563EB" stroke-width="2"/>
-  <!-- Raindrop (Left) -->
-  <path d="M22 46c0 3-2 5-3 5s-3-2-3-5 3-6 3-6 3 3 3 6z" fill="#3B82F6" stroke="none"/>
-  <!-- Snowflake (Right) -->
-  <g transform="translate(38, 44) scale(0.6)">
-    <path d="M0 -8v16M-7 -4l14 8M-7 4l14 -8" stroke="#0284C7" stroke-width="2.5"/>
-  </g>
+<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg" style="background: #112233;">
+  <line x1="40" y1="-20" x2="35" y2="10" stroke="#aaccff" stroke-width="1.5" stroke-linecap="round">
+    <animate attributeName="y1" values="-20;320" dur="0.9s" repeatCount="indefinite" />
+    <animate attributeName="y2" values="10;350" dur="0.9s" repeatCount="indefinite" />
+  </line>
+  <line x1="120" y1="-40" x2="115" y2="-10" stroke="#aaccff" stroke-width="1.2" stroke-linecap="round">
+    <animate attributeName="y1" values="-40;300" dur="0.7s" repeatCount="indefinite" />
+    <animate attributeName="y2" values="-10;330" dur="0.7s" repeatCount="indefinite" />
+  </line>
+  <circle cx="80" cy="-10" r="2.5" fill="#ffffff">
+    <animate attributeName="cy" values="-10;310" dur="3.2s" repeatCount="indefinite" />
+    <animate attributeName="cx" values="80;95;65;80" dur="3.2s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="160" cy="-25" r="3.5" fill="#ffffff">
+    <animate attributeName="cy" values="-25;315" dur="4.1s" repeatCount="indefinite" />
+    <animate attributeName="cx" values="160;140;175;160" dur="4.1s" repeatCount="indefinite" />
+  </circle>
 </svg>
