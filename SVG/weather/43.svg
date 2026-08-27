@@ -1,4 +1,18 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 50 H90 M50 10 V90 M20 20 L80 80 M80 20 L20 80" stroke="white" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="50" cy="50" r="15" fill="none" stroke="white" stroke-width="5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <style>
+    .snowflake {
+      fill: #FFFFFF;
+      opacity: 0.8;
+      animation: blizzard-fall linear infinite;
+    }
+    @keyframes blizzard-fall {
+      0% { transform: translate(0, -10px); }
+      100% { transform: translate(-200px, 610px); }
+    }
+    .sf-1 { animation-duration: 1.2s; animation-delay: 0s; }
+    .sf-2 { animation-duration: 0.8s; animation-delay: 0.4s; }
+  </style>
+  <rect width="100%" height="100%" fill="#111928" />
+  <circle class="snowflake sf-1" cx="600" cy="-10" r="4" />
+  <circle class="snowflake sf-2" cx="400" cy="-10" r="2" />
 </svg>
