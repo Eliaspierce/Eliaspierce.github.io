@@ -1,3 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" width="100%" height="100%">
-  <path fill="#D3D3D3" opacity="0.8" d="M60,110 C40,110 30,95 35,80 C25,70 30,50 45,45 C55,25 80,25 95,40 C105,30 125,35 130,50 C145,50 155,65 145,80 C155,95 140,110 120,110 Z"/>
+<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .smoke-path {
+      fill: none;
+      stroke: #d3d3d3;
+      stroke-width: 8;
+      stroke-linecap: round;
+      opacity: 0;
+      animation: riseAndFade 4s infinite ease-out;
+    }
+    .delay-1 { animation-delay: 1.5s; }
+    .delay-2 { animation-delay: 3s; }
+    @keyframes riseAndFade {
+      0% {
+        transform: translateY(0px) scale(0.8);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-80px) scale(1.2);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-160px) scale(1.8);
+        opacity: 0;
+      }
+    }
+  </style>
+  <g transform="translate(100, 250)">
+    <path class="smoke-path" d="M0,0 Q-15,-30 15,-60 T-10,-140" />
+    <path class="smoke-path delay-1" d="M0,0 Q20,-25 -15,-65 T10,-130" />
+    <path class="smoke-path delay-2" d="M0,0 Q-10,-40 10,-70 T-5,-150" />
+  </g>
 </svg>
