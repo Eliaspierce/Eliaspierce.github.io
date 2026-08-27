@@ -9,7 +9,6 @@
   </defs>
   
   <g transform="translate(100, 20)">
-    <!-- Rotating funnel layers -->
     <path d="M-20,0 Q0,50 -10,100 Q-5,150 -3,200 L3,200 Q5,150 10,100 Q20,50 20,0 Z" fill="url(#grad)">
       <animateTransform 
         attributeName="transform" 
@@ -18,8 +17,6 @@
         dur="1.5s" 
         repeatCount="indefinite" />
     </path>
-    
-    <!-- Swirling debris / inner lines -->
     <path d="M-40,40 C-10,60 10,50 35,30" stroke="#627d98" stroke-width="3" fill="none">
       <animateTransform 
         attributeName="transform" 
