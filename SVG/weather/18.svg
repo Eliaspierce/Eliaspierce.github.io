@@ -1,6 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64">
-  <path fill="#90A4AE" d="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96z"/>
-  <path fill="#4FC3F7" d="M8 17l-1 3h1.5l1-3z"/>
-  <circle fill="#E1F5FE" cx="12" cy="18.5" r="1.5"/>
-  <path fill="#4FC3F7" d="M16 17l-1 3h1.5l1-3z"/>
+<svg version="1.1" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .am-sleet { animation: am-drop 1.5s linear infinite; }
+    .am-delay { animation-delay: 0.75s; }
+    @keyframes am-drop {
+      0% { transform: translateY(0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(16px); opacity: 0; }
+    }
+  </style>
+  <path fill="#90A4AE" d="M42 28a10 10 0 0 0-18-4 8 8 0 0 0-12 7 7 7 0 0 0 4 13h26a6 6 0 0 0 0-16z"/>
+  <line class="am-sleet" x1="24" y1="44" x2="22" y2="50" stroke="#00bcd4" stroke-width="2" stroke-linecap="round"/>
+  <line class="am-sleet am-delay" x1="34" y1="44" x2="32" y2="50" stroke="#00bcd4" stroke-width="2" stroke-linecap="round"/>
+  <line class="am-sleet" x1="44" y1="44" x2="42" y2="50" stroke="#00bcd4" stroke-width="2" stroke-linecap="round"/>
 </svg>
