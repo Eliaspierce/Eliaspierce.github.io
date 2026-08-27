@@ -1,3 +1,42 @@
-<svg fill="#ffffff" width="50px" height="50px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10,21H8a1,1,0,0,0,0,2h2a1,1,0,0,0,0-2Zm1-4H6a1,1,0,0,0,0,2h5a1,1,0,0,0,0-2ZM18,2a1,1,0,0,0-1-1H3A1,1,0,0,0,3,3H17A1,1,0,0,0,18,2Zm3,3H6A1,1,0,0,0,6,7H21a1,1,0,0,0,0-2ZM19,9H10a1,1,0,0,0,0,2h9a1,1,0,0,0,0-2Zm-5,4H8a1,1,0,0,0,0,2h6a1,1,0,0,0,0-2Z"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 200 300" width="200" height="300">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8a9ba8" stop-opacity="0.7" />
+      <stop offset="50%" stop-color="#486581" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#243b53" stop-opacity="0.7" />
+    </linearGradient>
+  </defs>
+  
+  <g transform="translate(100, 20)">
+    <!-- Rotating funnel layers -->
+    <path d="M-20,0 Q0,50 -10,100 Q-5,150 -3,200 L3,200 Q5,150 10,100 Q20,50 20,0 Z" fill="url(#grad)">
+      <animateTransform 
+        attributeName="transform" 
+        type="scale" 
+        values="1 1; 0.8 1; 1 1" 
+        dur="1.5s" 
+        repeatCount="indefinite" />
+    </path>
+    
+    <!-- Swirling debris / inner lines -->
+    <path d="M-40,40 C-10,60 10,50 35,30" stroke="#627d98" stroke-width="3" fill="none">
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        from="0" to="360" 
+        dur="0.8s" 
+        repeatCount="indefinite" 
+        transform-origin="0 50" />
+    </path>
+    <path d="M-30,100 C-5,120 15,110 25,90" stroke="#486581" stroke-width="4" fill="none">
+      <animateTransform 
+        attributeName="transform" 
+        type="rotate" 
+        from="360" to="0" 
+        dur="1.2s" 
+        repeatCount="indefinite" 
+        transform-origin="0 100" />
+    </path>
+  </g>
 </svg>
