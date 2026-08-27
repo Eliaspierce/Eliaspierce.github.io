@@ -1,1 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="cloud-moon-showers"><path fill="#6563FF" d="M8.5,14a1,1,0,0,0-1,1v6a1,1,0,0,0,2,0V15A1,1,0,0,0,8.5,14Zm4-1a1,1,0,0,0-1,1v6a1,1,0,0,0,2,0V14A1,1,0,0,0,12.5,13Zm9.2-5.93a1,1,0,0,0-.94-.26,3,3,0,0,1-.65.08,3,3,0,0,1-3-3,3.13,3.13,0,0,1,.08-.66,1,1,0,0,0-.26-.93A1,1,0,0,0,16,2a4.93,4.93,0,0,0-3.83,4.21A6.24,6.24,0,0,0,10.5,6a6,6,0,0,0-5.94,5.13,3.5,3.5,0,0,0-.46,6.58,1.14,1.14,0,0,0,.4.08,1,1,0,0,0,.4-1.92A1.48,1.48,0,0,1,4,14.5,1.5,1.5,0,0,1,5.5,13a1,1,0,0,0,1-1,4,4,0,0,1,4-4,3.91,3.91,0,0,1,2.17.66l0,0a3.94,3.94,0,0,1,1.57,2,1,1,0,0,0,.78.67A2.32,2.32,0,0,1,16,15.61a1,1,0,0,0,1.1,1.68A4.32,4.32,0,0,0,19,13.67a4.23,4.23,0,0,0-.49-2A4.94,4.94,0,0,0,22,8,1,1,0,0,0,21.7,7.07ZM17.11,9.89a2.72,2.72,0,0,1-.42,0A4.6,4.6,0,0,0,16,9.54a6.06,6.06,0,0,0-1.82-2.28c0-.12,0-.25,0-.37a3,3,0,0,1,1.05-2.28,5,5,0,0,0,4.23,4.23A3,3,0,0,1,17.11,9.89Z"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <defs>
+    <path id="drop" d="M0,0 L0,4" stroke="#4a90e2" stroke-width="2" stroke-linecap="round" />
+    <style>
+      .cloud-move {
+        animation: drift 4s ease-in-out infinite alternate;
+      }
+      .rain-1 {
+        animation: fall 1.2s linear infinite;
+      }
+      .rain-2 {
+        animation: fall 0.9s linear infinite 0.4s;
+      }
+      .rain-3 {
+        animation: fall 1.1s linear infinite 0.8s;
+      }
+      @keyframes drift {
+        0% { transform: translateX(-2px); }
+        100% { transform: translateX(3px); }
+      }
+      @keyframes fall {
+        0% { transform: translateY(0); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(14px); opacity: 0; }
+      }
+    </style>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="#0b192c" />
+  <path d="M22 18 A 10 10 0 0 1 38 30 A 11 11 0 0 0 22 18 Z" fill="#f5d77f" />
+  <g class="cloud-move">
+    <path d="M20 40 h18 a6 6 0 0 0 0 -12 a8 8 0 0 0 -15 -2 a6 6 0 0 0 -3 14 z" fill="#b0c4de" />
+    <use href="#drop" class="rain-1" x="24" y="42" />
+    <use href="#drop" class="rain-2" x="29" y="42" />
+    <use href="#drop" class="rain-3" x="34" y="42" />
+  </g>
+</svg>
