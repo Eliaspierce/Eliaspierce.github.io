@@ -1,12 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100" height="100" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Wind / Blowing lines -->
-  <path d="M2 12h9" />
-  <path d="M3 16h6" />
-  <path d="M5 8h11" />
-  <path d="M18 10h2a1.5 1.5 0 0 1 0 3h-2" />
-  <!-- Snowflakes / Dots -->
-  <circle cx="14" cy="15" r="1" fill="#ffffff" />
-  <circle cx="19" cy="6" r="1" fill="#ffffff" />
-  <circle cx="10" cy="5" r="1" fill="#ffffff" />
-  <circle cx="7" cy="19" r="1" fill="#ffffff" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background: #1a2b4c;">
+  <defs>
+    <g id="flake">
+      <circle cx="0" cy="0" r="3" fill="#ffffff" opacity="0.8" />
+    </g>
+  </defs>
+  <use href="#flake" x="0" y="0">
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      values="-50,400; 850,200" 
+      dur="2.5s" 
+      repeatCount="indefinite" />
+  </use>
+  <use href="#flake" x="0" y="0">
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      values="-50,250; 850,50" 
+      dur="4s" 
+      repeatCount="indefinite" 
+      begin="1s" />
+  </use>
+  <use href="#flake" x="0" y="0">
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      values="-50,450; 850,300" 
+      dur="3.2s" 
+      repeatCount="indefinite" 
+      begin="0.5s" />
+  </use>
+  <use href="#flake" x="0" y="0">
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      values="-50,150; 850,-50" 
+      dur="1.8s" 
+      repeatCount="indefinite" 
+      begin="1.5s" />
+  </use>
 </svg>
