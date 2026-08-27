@@ -1,40 +1,33 @@
-<svg xmlns="http://w3.org" viewBox="0 0 64 64" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
   <defs>
     <style>
-      .bolt {
-        fill: #ffeb3b;
-        opacity: 0;
-        animation: flash 4s infinite;
-      }
-      .rain {
-        stroke: #90caf9;
-        stroke-width: 2;
-        stroke-linecap: round;
-        animation: fall 1.2s linear infinite;
-      }
-      .rain-delay {
-        animation-delay: 0.6s;
-      }
       @keyframes flash {
         0%, 90%, 94%, 100% { opacity: 0; }
         92%, 96% { opacity: 1; }
       }
       @keyframes fall {
-        0% { transform: translateY(0); opacity: 0; }
+        0% { transform: translateY(-4px); opacity: 0; }
         50% { opacity: 1; }
-        100% { transform: translateY(12px); opacity: 0; }
+        100% { transform: translateY(8px); opacity: 0; }
       }
+      .moon { fill: #f1f5f9; }
+      .cloud { fill: #475569; }
+      .lightning { fill: #facc15; animation: flash 3s infinite; }
+      .rain { stroke: #38bdf8; stroke-width: 2; stroke-linecap: round; animation: fall 1.2s infinite linear; }
+      .rain-delay { animation-delay: 0.4s; }
     </style>
-    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#90a4ae" />
-      <stop offset="100%" stop-color="#455a64" />
+    <linearGradient id="nightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
     </linearGradient>
   </defs>
-  <circle cx="32" cy="32" r="30" fill="#1e293b" />
-  <path d="M22 18 A10 10 0 0 1 32 28 A10 10 0 0 1 22 18 Z" fill="#fef08a" opacity="0.9" />
-  <line x1="24" y1="44" x2="22" y2="50" class="rain" />
-  <line x1="32" y1="42" x2="30" y2="48" class="rain rain-delay" />
-  <line x1="40" y1="44" x2="38" y2="50" class="rain" />
-  <path class="bolt" d="M31 34 L26 42 L32 42 L29 50 L39 39 L33 39 Z" />
-  <path d="M20 38 h22 a6 6 0 0 0 0 -12 a8 8 0 0 0 -15 -3 a7 7 0 0 0 -7 15 z" fill="url(#cloudGrad)" />
+  <rect width="64" height="64" rx="12" fill="url(#nightGrad)" />
+  <circle cx="20" cy="18" r="6" class="moon" />
+  <circle cx="42" cy="14" r="1" fill="#cbd5e1" opacity="0.6" />
+  <circle cx="12" cy="32" r="0.8" fill="#cbd5e1" opacity="0.8" />
+  <polygon points="30,34 24,44 29,44 27,52 36,40 31,40" class="lightning" />
+  <path d="M42 38h-2.13A7 7 0 0 0 26 35a7 7 0 0 0-5.87 5.92A5.5 5.5 0 0 0 15.5 46.5 5.5 5.5 0 0 0 21 52h21a5.5 5.5 0 0 0 5.5-5.5 5.5 5.5 0 0 0-5.5-5.5z" class="cloud" />
+  <line x1="24" y1="54" x2="22" y2="58" class="rain" />
+  <line x1="32" y1="54" x2="30" y2="58" class="rain rain-delay" />
+  <line x1="40" y1="54" x2="38" y2="58" class="rain" />
 </svg>
