@@ -1,7 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-  <circle cx="26" cy="22" r="10" fill="#FACC15" />
-  <path d="M22 36C17.5817 36 14 32.4183 14 28C14 23.8344 17.1851 20.4357 21.2882 20.0632C22.6974 16.9424 25.8453 14.75 29.5 14.75C34.1944 14.75 38.0772 18.2575 38.6432 22.8021C41.7612 23.4795 44 26.2415 44 29.5C44 33.0899 41.0899 36 37.5 36H22Z" fill="#94A3B8" />
-  <line x1="22" y1="42" x2="19" y2="48" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" />
-  <line x1="32" y1="42" x2="29" y2="48" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" />
-  <line x1="42" y1="42" x2="39" y2="48" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <defs>
+    <style>
+      .rain {
+        stroke: #70b5f9;
+        stroke-linecap: round;
+        stroke-width: 2;
+        animation: fall 1s linear infinite;
+      }
+      .r1 { animation-delay: 0s; }
+      .r2 { animation-delay: 0.4s; }
+      .r3 { animation-delay: 0.7s; }
+      @keyframes fall {0% { transform: translateY(-6px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(12px); opacity: 0; }}
+    </style>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#cbe5ff"/><stop offset="100%" stop-color="#8ab8e6"/></linearGradient>
+  </defs>
+  <circle cx="20" cy="22" r="10" fill="#ffa726"/>
+  <path d="M42 28a10 10 0 0 0-18-4 8 8 0 0 0-12 6 8 8 0 0 0 2 15h28a8 8 0 0 0 0-16z" fill="url(#cloudGrad)"/>
+  <line class="rain r1" x1="26" y1="47" x2="24" y2="53" />
+  <line class="rain r2" x1="33" y1="47" x2="31" y2="53" />
+  <line class="rain r3" x1="40" y1="47" x2="38" y2="53" />
 </svg>
