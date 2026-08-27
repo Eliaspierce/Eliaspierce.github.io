@@ -1,8 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Cloud Path -->
-  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" fill="#E0F2FE" stroke="#0284C7"/>
-  <!-- Ice / Hail Crystals -->
-  <path d="M8 14v3M8 17l1-1M8 17l-1-1" stroke="#0284C7"/>
-  <path d="M12 15v3M12 18l1-1M12 18l-1-1" stroke="#0284C7"/>
-  <path d="M16 14v3M16 17l1-1M16 17l-1-1" stroke="#0284C7"/>
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="coldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a1c4fd" />
+      <stop offset="100%" stop-color="#c2e9fb" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="40" fill="url(#coldGrad)" />
+  <g stroke="#ffffff" stroke-width="3" stroke-linecap="round">
+    <line x1="50" y1="25" x2="50" y2="75" />
+    <line x1="25" y1="50" x2="75" y2="50" />
+    <line x1="32" y1="32" x2="68" y2="68" />
+    <line x1="32" y1="68" x2="68" y2="32" />
+    <animateTransform 
+      attributeName="transform" 
+      type="scale" 
+      values="0.9; 1.1; 0.9" 
+      keyTimes="0; 0.5; 1" 
+      dur="2s" 
+      repeatCount="indefinite" 
+      transform-origin="50 50" 
+    />
+  </g>
 </svg>
