@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0f5f9" />
+      <stop offset="100%" stop-color="#cbe3f0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cloud Shape -->
+  <path d="M44 26c0-4.4-3.6-8-8-8-2.6 0-4.9 1.2-6.4 3.1-1.6-1.9-4-3.1-6.6-3.1-5 0-9 4-9 9 0 .5.1 1 .2 1.5-3.1 1.2-5.3 4.2-5.3 7.5 0 4.7 3.8 8.5 8.5 8.5h29c4.1 0 7.5-3.4 7.5-7.5 0-3.6-2.6-6.6-6.1-7.3.4-.9.6-1.9.6-2.8z" fill="url(#cloudGrad)" stroke="#a1c4db" stroke-width="1.5" stroke-linejoin="round" />
+  
+  <!-- Snowflake Symbol -->
+  <g transform="translate(24, 43) scale(0.6)" stroke="#368bc1" stroke-width="2" stroke-linecap="round">
+    <line x1="0" y1="-8" x2="0" y2="8" />
+    <line x1="-7" y1="-4" x2="7" y2="4" />
+    <line x1="-7" y1="4" x2="7" y2="-4" />
+    <!-- Little snowflake center/details -->
+    <circle cx="0" cy="0" r="1.5" fill="#368bc1" />
+  </g>
+  
+  <!-- Weather Text: 20% -->
+  <text x="37" y="47" font-family="Arial, sans-serif" font-weight="bold" font-size="11" fill="#2c5270">20%</text>
+</svg>
