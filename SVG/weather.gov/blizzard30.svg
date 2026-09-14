@@ -1,0 +1,11 @@
+<svg xmlns="http://w3.org" viewBox="0 0 64 64" width="100%" height="100%">
+  <!-- Weather Cloud Base -->
+  <path fill="#90A4AE" d="M46 26c-.5 0-1 .1-1.4.3C43 21.6 38.6 18 33 18c-5.1 0-9.3 3.6-10.3 8.4C21.4 26.1 20.7 26 20 26c-5.5 0-10 4.5-10 10 0 5.2 4 9.5 9.1 9.9h27.9c4.4-.4 7.9-4 7.9-8.4 0-4.6-3.7-8.3-8.5-8.5z"/>
+  
+  <!-- Blizzard Wind Swirls / Blowing Snow Lines -->
+  <path fill="none" stroke="#ECEFF1" stroke-width="2.5" stroke-linecap="round" d="M14 50h12m-8 4h18m-4-8h10"/>
+  <path fill="none" stroke="#B0BEC5" stroke-width="2" stroke-linecap="round" d="M38 48l4-2m-16 4l4-2"/>
+  
+  <!-- Chance of Snow Text (30%) -->
+  <text x="32" y="60" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#37474F" text-anchor="middle">30%</text>
+</svg>
