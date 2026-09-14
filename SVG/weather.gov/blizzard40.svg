@@ -1,0 +1,13 @@
+<svg xmlns="http://w3.org" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Weather Cloud -->
+  <path d="M25 60 a15 15 0 0 1 2.5 -29.8 a22 22 0 0 1 41.5 5.8 a14 14 0 0 1 -1 24 z" fill="#90a4ae"/>
+  
+  <!-- Snowflakes / Blizzard dashes -->
+  <circle cx="35" cy="70" r="2" fill="#00bcd4"/>
+  <circle cx="50" cy="75" r="2" fill="#00bcd4"/>
+  <line x1="63" y1="68" x2="60" y2="73" stroke="#00bcd4" stroke-width="2"/>
+  <line x1="22" y1="68" x2="25" y2="73" stroke="#00bcd4" stroke-width="2"/>
+
+  <!-- 40% Text -->
+  <text x="50" y="95" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">40%</text>
+</svg>
