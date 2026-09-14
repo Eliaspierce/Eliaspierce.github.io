@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient (Dark, stormy winter sky) -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0B132B" />
+      <stop offset="60%" stop-color="#1C2541" />
+      <stop offset="100%" stop-color="#3A506B" />
+    </linearGradient>
+
+    <!-- Glow effect for text and metrics -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Blur effect to simulate distant, heavy blowing snow -->
+    <filter id="snowBlur">
+      <feGaussianBlur stdDeviation="1.5" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#skyGrad)" />
+
+  <!-- Background Layer: Heavy Blurring Blizzard Lines -->
+  <g stroke="#FFFFFF" stroke-opacity="0.3" stroke-linecap="round" filter="url(#snowBlur)">
+    <line x1="50" y1="30" x2="10" y2="70" stroke-width="3" />
+    <line x1="180" y1="20" x2="120" y2="80" stroke-width="4" />
+    <line x1="320" y1="40" x2="260" y2="100" stroke-width="2" />
+    <line x1="100" y1="150" x2="30" y2="220" stroke-width="5" />
+    <line x1="250" y1="120" x2="170" y2="200" stroke-width="4" />
+    <line x1="380" y1="180" x2="310" y2="250" stroke-width="3" />
+    <line x1="120" y1="280" x2="50" y2="350" stroke-width="4" />
+    <line x1="290" y1="270" x2="210" y2="350" stroke-width="5" />
+  </g>
+
+  <!-- Foreground Layer: Sharp, Fast-Moving Snow Streaks -->
+  <g stroke="#E0FBFC" stroke-opacity="0.8" stroke-linecap="round">
+    <!-- Wind Swirls / Drifts -->
+    <path d="M -20,100 Q 100,120 180,80 T 380,110" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="10 15" />
+    <path d="M 20,240 Q 150,210 260,260 T 420,220" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.3" stroke-dasharray="5 20" />
+
+    <!-- Fast Blizzard Flakes -->
+    <line x1="90" y1="50" x2="40" y2="100" stroke-width="2.5" />
+    <line x1="230" y1="60" x2="180" y2="110" stroke-width="3" />
+    <line x1="350" y1="80" x2="300" y2="130" stroke-width="1.5" />
+    <line x1="40" y1="180" x2="-10" y2="230" stroke-width="2" />
+    <line x1="160" y1="160" x2="100" y2="220" stroke-width="3.5" />
+    <line x1="310" y1="190" x2="250" y2="250" stroke-width="2" />
+    <line x1="100" y1="310" x2="40" y2="370" stroke-width="3" />
+    <line x1="220" y1="300" x2="160" y2="360" stroke-width="2.5" />
+    <line x1="360" y1="320" x2="300" y2="380" stroke-width="4" />
+  </g>
+
+  <!-- Weather Icon Overlay (Subtle representation of a snow cloud) -->
+  <g transform="translate(200, 95) scale(0.85)" opacity="0.85">
+    <!-- Cloud base -->
+    <path d="M -40,20 A 25,25 0 0,1 -25,-20 A 35,35 0 0,1 30,-25 A 25,25 0 0,1 45,15 A 20,20 0 0,1 25,35 L -25,35 A 20,20 0 0,1 -40,20 Z" fill="#E0FBFC" opacity="0.2" />
+    <!-- Main Cloud Front -->
+    <path d="M -30,15 A 20,20 0 0,1 -15,-15 A 30,30 0 0,1 35,-15 A 20,20 0 0,1 35,25 L -15,25 A 15,15 0 0,1 -30,15 Z" fill="#FFFFFF" opacity="0.7" />
+  </g>
+
+  <!-- Weather Text Information Layer -->
+  <g text-anchor="middle" font-family="system-ui, -apple-system, sans-serif">
+    <!-- Core Probability Metric -->
+    <text x="200" y="210" font-size="76" font-weight="900" fill="#FFFFFF" filter="url(#glow)" letter-spacing="-2">60%</text>
+    
+    <!-- Weather Condition Label -->
+    <text x="200" y="255" font-size="24" font-weight="700" fill="#E0FBFC" letter-spacing="4">BLIZZARD</text>
+    
+    <!-- Likelihood Subtext -->
+    <text x="200" y="285" font-size="14" font-weight="500" fill="#A5C4D4" letter-spacing="1">PROBABILITY LIKELY</text>
+
+    <!-- Decorative Bottom Divider Line -->
+    <line x1="140" y1="310" x2="260" y2="310" stroke="#E0FBFC" stroke-width="2" stroke-opacity="0.4" stroke-linecap="round" />
+
+    <!-- Optional status readout -->
+    <text x="200" y="335" font-size="11" font-weight="600" fill="#FFFFFF" stroke="none" opacity="0.7" letter-spacing="0.5">WIND WARNING ACTIVE</text>
+  </g>
+
+  <!-- Tiny foreground blowing ice crystals -->
+  <circle cx="75" cy="120" r="1.5" fill="#FFFFFF" />
+  <circle cx="280" cy="150" r="2" fill="#FFFFFF" />
+  <circle cx="190" cy="280" r="1" fill="#FFFFFF" />
+  <circle cx="340" cy="290" r="2.5" fill="#FFFFFF" />
+  <circle cx="130" cy="40" r="2" fill="#FFFFFF" />
+</svg>
