@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Cloud base -->
+  <path d="M19.3 29.5c-4.4 0-8 3.6-8 8s3.6 8 8 8h27.4c4.4 0 8-3.6 8-8s-3.6-8-8-8c-.8 0-1.6.1-2.3.4-1.9-3.2-5.4-5.4-9.4-5.4-4.2 0-7.8 2.5-9.5 6.1-.9-.6-1.9-1.1-2.9-1.1z" fill="#90a4ae"/>
+  <!-- Snowflakes / Blizzard lines -->
+  <g fill="#cfd8dc">
+    <circle cx="22" cy="50" r="2"/>
+    <circle cx="32" cy="54" r="2"/>
+    <circle cx="42" cy="50" r="2"/>
+  </g>
+  <!-- Probability Text Label -->
+  <text x="32" y="39" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#37474f" text-anchor="middle">50%</text>
+</svg>
