@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 350" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A2634" />
+      <stop offset="100%" stop-color="#0D131A" />
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8FA9C4" />
+      <stop offset="100%" stop-color="#4A5C70" />
+    </linearGradient>
+
+    <!-- Ice/Glow Filter for Freezing Rain -->
+    <filter id="iceGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="450" height="350" rx="20" fill="url(#bgGrad)" />
+
+  <!-- MAIN STATUS TEXT -->
+  <text x="50%" y="45" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#E2F1FF" letter-spacing="0.5">
+    Freezing Rain &amp; Snow
+  </text>
+
+  <!-- SUB-STATUS / PROBABILITY TEXT -->
+  <text x="50%" y="75" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" fill="#A2C4E3" letter-spacing="0.5">
+    Occasional <tspan fill="#3CD070" font-weight="700">80%</tspan> Full of Precip
+  </text>
+
+  <!-- WEATHER ICON GROUP (Centered) -->
+  <g transform="translate(115, 95)">
+    
+    <!-- BACKGROUND CLOUD -->
+    <path d="M120,65 a25,25 0 0,1 45,-10 a35,35 0 0,1 60,10 a25,25 0 0,1 0,50 l-105,0 a25,25 0 0,1 0,-50 z" fill="#3A4B5E" opacity="0.7" transform="translate(-20, -10) scale(0.9)" />
+
+    <!-- FOREGROUND STORM CLOUD -->
+    <path d="M120,65 a25,25 0 0,1 45,-10 a35,35 0 0,1 60,10 a25,25 0 0,1 0,50 l-105,0 a25,25 0 0,1 0,-50 z" fill="url(#cloudGrad)" />
+
+    <!-- PRECIPITATION GRAPHICS (80% High Density Matrix) -->
+    <g class="precipitation" transform="translate(100, 115)">
+      <!-- Row 1 -->
+      <!-- Snow -->
+      <g transform="translate(10, 10)" stroke="#E2F1FF" stroke-width="1.5" stroke-linecap="round">
+        <line x1="0" y1="-4" x2="0" y2="4" /><line x1="-4" y1="0" x2="4" y2="0" />
+        <line x1="-3" y1="-3" x2="3" y2="3" /><line x1="-3" y1="3" x2="3" y2="-3" />
+      </g>
+      <!-- Freezing Rain (Ice Glaze Drop) -->
+      <g transform="translate(35, 8)" filter="url(#iceGlow)">
+        <path d="M0,0 Q3,6 0,10 Q-3,6 0,0 Z" fill="#90E0EF" opacity="0.9" />
+        <path d="M0,2 L0,8" stroke="#FFF" stroke-width="0.8" opacity="0.7" stroke-linecap="round" />
+      </g>
+      <!-- Snow -->
+      <g transform="translate(60, 12)" stroke="#E2F1FF" stroke-width="1.2" stroke-linecap="round">
+        <line x1="0" y1="-3" x2="0" y2="3" /><line x1="-3" y1="0" x2="3" y2="0" />
+      </g>
+      <!-- Freezing Rain -->
+      <g transform="translate(85, 5)" filter="url(#iceGlow)">
+        <path d="M0,0 Q3,6 0,10 Q-3,6 0,0 Z" fill="#AADEFF" opacity="0.9" />
+      </g>
+
+      <!-- Row 2 -->
+      <!-- Freezing Rain -->
+      <g transform="translate(0, 30)" filter="url(#iceGlow)">
+        <path d="M0,0 Q3,6 0,10 Q-3,6 0,0 Z" fill="#AADEFF" opacity="0.9" />
+      </g>
+      <!-- Snow -->
+      <g transform="translate(22, 28)" stroke="#E2F1FF" stroke-width="1.6" stroke-linecap="round">
+        <line x1="0" y1="-5" x2="0" y2="5" /><line x1="-5" y1="0" x2="5" y2="0" />
+        <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5" /><line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5" />
+      </g>
+      <!-- Freezing Rain -->
+      <g transform="translate(48, 32)" filter="url(#iceGlow)">
+        <path d="M0,0 Q3,6 0,10 Q-3,6 0,0 Z" fill="#90E0EF" opacity="0.9" />
+        <path d="M0,2 L0,8" stroke="#FFF" stroke-width="0.8" opacity="0.7" stroke-linecap="round" />
+      </g>
+      <!-- Snow -->
+      <g transform="translate(72, 25)" stroke="#E2F1FF" stroke-width="1.5" stroke-linecap="round">
+        <line x1="0" y1="-4" x2="0" y2="4" /><line x1="-4" y1="0" x2="4" y2="0" />
+      </g>
+      <!-- Freezing Rain -->
+      <g transform="translate(95, 30)" filter="url(#iceGlow)">
+        <path d="M0,0 Q3,6 0,10 Q-3,6 0,0 Z" fill="#AADEFF" opacity="0.9" />
+      </g>
+
+      <!-- Row 3 -->
+      <!-- Snow -->
+      <g transform="translate(12, 52)" stroke="#E2F1FF" stroke-width="1.2" stroke-linecap="round">
+        <line x1="0" y1="-3" x2="0" y2="3" /><line x1="-3" y1="0" x2="3" y2="0" />
+      </g>
+      <!-- Freezing Rain -->
+      <g transform="translate(38, 55)" filter="url(#iceGlow)">
+        <path d="M0,0 Q3,6 0,10 Q-3,6 0,0 Z" fill="#AADEFF" opacity="0.9" />
+      </g>
+      <!-- Snow -->
+      <g transform="translate(62, 50)" stroke="#E2F1FF" stroke-width="1.6" stroke-linecap="round">
+        <line x1="0" y1="-5" x2="0" y2="5" /><line x1="-5" y1="0" x2="5" y2="0" />
+        <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5" /><line x1="-3.5" y1="3.5" x2="3.5" y2="-3.5" />
+      </g>
+      <!-- Freezing Rain -->
+      <g transform="translate(82, 54)" filter="url(#iceGlow)">
+        <path d="M0,0 Q3,6 0,10 Q-3,6 0,0 Z" fill="#90E0EF" opacity="0.9" />
+      </g>
+    </g>
+  </g>
+
+  <!-- BOTTOM METRIC PROGRESS BAR (Visualizing 80% Full) -->
+  <g transform="translate(75, 300)">
+    <!-- Track -->
+    <rect x="0" y="0" width="300" height="8" rx="4" fill="#223247" />
+    <!-- 80% Filled Progress -->
+    <rect x="0" y="0" width="240" height="8" rx="4" fill="#3CD070" />
+    <!-- Soft Glow Dot at 80% -->
+    <circle cx="240" cy="4" r="6" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="240" cy="4" r="12" fill="#3CD070" opacity="0.4" />
+    <!-- Label -->
+    <text x="150" y="24" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="600" fill="#6A85A0" letter-spacing="1">
+      PRECIPITATION DENSITY CAP
+    </text>
+  </g>
+</svg>

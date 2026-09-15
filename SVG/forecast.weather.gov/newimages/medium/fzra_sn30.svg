@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 150" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <!-- Ice/Glow Filter -->
+    <filter id="iceGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="450" height="150" rx="16" fill="url(#bgGrad)" />
+
+  <!-- ICON SECTION -->
+  <g transform="translate(10, 0)">
+    <!-- Behind Cloud: Subtle Snowflakes -->
+    <g fill="#e2e8f0" opacity="0.7">
+      <!-- Snowflake 1 -->
+      <path d="M 50,25 L 50,37 M 44,31 L 56,31 M 46,27 L 54,35 M 46,35 L 54,27" stroke="#e2e8f0" stroke-width="1.5" stroke-linecap="round" />
+      <!-- Snowflake 2 -->
+      <path d="M 115,30 L 115,42 M 109,36 L 121,36 M 111,32 L 119,40 M 111,40 L 119,32" stroke="#e2e8f0" stroke-width="1.5" stroke-linecap="round" />
+    </g>
+
+    <!-- Main Weather Cloud -->
+    <path d="M 45,75 
+             A 20,20 0 0,1 50,35 
+             A 25,25 0 0,1 95,30 
+             A 22,22 0 0,1 125,50 
+             A 18,18 0 0,1 120,75 
+             Z" 
+          fill="url(#cloudGrad)" />
+
+    <!-- Precipitation (Freezing Rain & Snow Drops) -->
+    <!-- Freezing Rain (Angled Drops with Ice Glaze Highlight) -->
+    <g stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" filter="url(#iceGlow)">
+      <line x1="55" y1="85" x2="50" y2="100" />
+      <line x1="85" y1="85" x2="80" y2="100" />
+      <line x1="115" y1="85" x2="110" y2="100" />
+    </g>
+    <g stroke="#e2e8f0" stroke-width="2" stroke-linecap="round">
+      <line x1="54" y1="85" x2="50" y2="97" opacity="0.8" />
+      <line x1="84" y1="85" x2="80" y2="97" opacity="0.8" />
+    </g>
+
+    <!-- Falling Ice Pellets / Snow Stars -->
+    <g fill="#ffffff">
+      <!-- Pellet 1 -->
+      <circle cx="70" cy="95" r="2.5" fill="#f1f5f9" filter="url(#iceGlow)" />
+      <!-- Pellet 2 -->
+      <circle cx="100" cy="98" r="2.5" fill="#f1f5f9" filter="url(#iceGlow)" />
+      
+      <!-- Ground Ice Warning Bars -->
+      <path d="M 45,115 L 125,115" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" opacity="0.6" filter="url(#iceGlow)"/>
+      <path d="M 55,122 L 115,122" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+    </g>
+  </g>
+
+  <!-- TEXT SECTION -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+    <!-- Main Condition Heading -->
+    <text x="175" y="58" font-size="24" font-weight="700" fill="#f8fafc" letter-spacing="0.5">
+      Freezing Rain &amp; Snow
+    </text>
+
+    <!-- Probability Subheading -->
+    <text x="175" y="92" font-size="16" font-weight="500" fill="#94a3b8">
+      Chance of Precip
+    </text>
+
+    <!-- Percentage Badge -->
+    <g transform="translate(315, 74)">
+      <rect width="52" height="24" rx="6" fill="#38bdf8" fill-opacity="0.15" />
+      <text x="26" y="17" font-size="15" font-weight="700" fill="#38bdf8" text-anchor="middle">
+        30%
+      </text>
+    </g>
+  </g>
+</svg>

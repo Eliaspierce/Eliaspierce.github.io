@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hazeSun" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe066" />
+      <stop offset="100%" stop-color="#f5a623" />
+    </linearGradient>
+    <linearGradient id="hazeLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b0bec5" stop-opacity="0" />
+      <stop offset="15%" stop-color="#cfd8dc" stop-opacity="1" />
+      <stop offset="85%" stop-color="#cfd8dc" stop-opacity="1" />
+      <stop offset="100%" stop-color="#b0bec5" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Obscured Sun -->
+  <circle cx="32" cy="24" r="12" fill="url(#hazeSun)" opacity="0.85" />
+
+  <!-- Haze / Fog Horizontal Bars -->
+  <g fill="url(#hazeLine)">
+    <rect x="8" y="36" width="48" height="4" rx="2" />
+    <rect x="14" y="44" width="36" height="4" rx="2" />
+    <rect x="20" y="52" width="24" height="4" rx="2" />
+    <rect x="12" y="28" width="40" height="3" rx="1.5" opacity="0.6" />
+  </g>
+</svg>

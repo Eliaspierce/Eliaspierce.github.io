@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient for Weather App Style -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a3342" />
+      <stop offset="100%" stop-color="#121824" />
+    </linearGradient>
+
+    <!-- Cloud Shadow -->
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+
+    <!-- Ice Glow Effect -->
+    <filter id="iceGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#a5f3fc" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100" height="100" rx="16" fill="url(#skyGrad)" />
+
+  <!-- Rain Drops / Sleet / Freezing Rain Elements -->
+  <g stroke-linecap="round" opacity="0.85">
+    <!-- Liquid Rain Drops -->
+    <line x1="38" y1="58" x2="34" y2="68" stroke="#38bdf8" stroke-width="1.2" />
+    <line x1="62" y1="58" x2="58" y2="68" stroke="#38bdf8" stroke-width="1.2" />
+    
+    <!-- Freezing Rain / Ice Pellets (Glow Effect) -->
+    <g filter="url(#iceGlow)">
+      <!-- Droplet turning to ice -->
+      <line x1="48" y1="64" x2="45" y2="72" stroke="#e0f2fe" stroke-width="1.5" />
+      <circle cx="45" cy="72" r="1" fill="#a5f3fc" />
+
+      <!-- Freezing rain striking the ground/text -->
+      <line x1="28" y1="66" x2="25" y2="74" stroke="#e0f2fe" stroke-width="1.5" />
+      <circle cx="25" cy="74" r="1.2" fill="#ffffff" />
+      
+      <line x1="70" y1="62" x2="67" y2="70" stroke="#e0f2fe" stroke-width="1.5" />
+      <circle cx="67" cy="70" r="1" fill="#a5f3fc" />
+    </g>
+  </g>
+
+  <!-- Heavy Weather Clouds -->
+  <g filter="url(#blur)">
+    <!-- Back Cloud (Darker) -->
+    <path d="M36 44 
+             a10 10 0 0 1 18 -4 
+             a11 11 0 0 1 12 10 
+             a8 8 0 0 1 -4 15 
+             l(-26) 0 
+             a10 10 0 0 1 0 -21 z" 
+          fill="#4b5563" opacity="0.7"/>
+
+    <!-- Front Cloud (Main Storm Cloud) -->
+    <path d="M26 50 
+             a12 12 0 0 1 22 -6 
+             a15 15 0 0 1 26 4 
+             a11 11 0 0 1 -5 21 
+             l(-43) 0 
+             a12 12 0 0 1 0 -24 z" 
+          fill="#9ca3af" />
+  </g>
+
+  <!-- Icicles hanging from the front cloud base -->
+  <g fill="#bae6fd" opacity="0.9" filter="url(#iceGlow)">
+    <polygon points="32,69 34,69 33,75" />
+    <polygon points="45,69 48,69 46.5,77" />
+    <polygon points="56,69 58,69 57,74" />
+    <polygon points="64,68 66,68 65,73" />
+  </g>
+
+  <!-- Dynamic Ice Glaze on Text Foundation -->
+  <path d="M 12 87 L 88 87" stroke="#a5f3fc" stroke-width="2" stroke-linecap="round" filter="url(#iceGlow)" opacity="0.8"/>
+
+  <!-- Weather Text Label -->
+  <text x="50" y="85" 
+        text-anchor="middle" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+        font-size="8" 
+        font-weight="800" 
+        letter-spacing="0.5"
+        fill="#f8fafc">
+    FREEZING RAIN
+  </text>
+</svg>

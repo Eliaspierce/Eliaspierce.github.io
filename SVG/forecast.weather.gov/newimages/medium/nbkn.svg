@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Moon Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b0bec5" />
+      <stop offset="40%" stop-color="#78909c" />
+      <stop offset="100%" stop-color="#455a64" />
+    </linearGradient>
+
+    <!-- Moon Gradient -->
+    <linearGradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffde7" />
+      <stop offset="100%" stop-color="#fff59d" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background (Optional for contrast, can be removed) -->
+  <rect width="100%" height="100%" fill="#0c1020" rx="24" />
+
+  <!-- Stars -->
+  <g fill="#ffffff" opacity="0.8">
+    <circle cx="120" cy="140" r="2" />
+    <circle cx="200" cy="90" r="3" />
+    <circle cx="380" cy="120" r="1.5" />
+    <circle cx="420" cy="220" r="2.5" />
+    <circle cx="100" cy="280" r="2" />
+  </g>
+
+  <!-- Crescent Moon with Glow -->
+  <path d="M 280 120 
+           A 80 80 0 1 0 380 240 
+           A 65 65 0 1 1 280 120 Z" 
+        fill="url(#moonGrad)" 
+        filter="url(#glow)" />
+
+  <!-- Back/Smaller Cloud Layer -->
+  <path d="M 180 350 
+           a 45 45 0 0 1 60 -40 
+           a 55 55 0 0 1 100 10 
+           a 40 40 0 0 1 30 40 
+           l -190 0 Z" 
+        fill="#37474f" 
+        opacity="0.7" />
+
+  <!-- Front/Main Cloud Layer -->
+  <path d="M 120 380 
+           a 50 50 0 0 1 70 -45 
+           a 75 75 0 0 1 140 10 
+           a 55 55 0 0 1 65 55 
+           a 40 40 0 0 1 -15 75 
+           l -260 0 
+           a 40 40 0 0 1 0 -95 Z" 
+        fill="url(#cloudGrad)" />
+</svg>

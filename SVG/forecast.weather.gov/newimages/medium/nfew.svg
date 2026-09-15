@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Definitions for gradients and clips -->
+  <defs>
+    <!-- Deep Space Sky Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1128" />
+      <stop offset="100%" stop-color="#101f42" />
+    </linearGradient>
+
+    <!-- Glowing Moon Gradient -->
+    <linearGradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffde4" />
+      <stop offset="100%" stop-color="#f7ea94" />
+    </linearGradient>
+
+    <!-- Translucent Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#b0c4de" stop-opacity="0.1" />
+    </linearGradient>
+
+    <!-- Moon Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Star Glow Filter -->
+    <filter id="starGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Sky -->
+  <rect width="512" height="512" rx="32" fill="url(#skyGrad)" />
+
+  <!-- Starry Field -->
+  <g fill="#ffffff">
+    <!-- Tiny background stars -->
+    <circle cx="80" cy="120" r="1.5" opacity="0.6" />
+    <circle cx="420" cy="100" r="1.2" opacity="0.5" />
+    <circle cx="450" cy="280" r="1.5" opacity="0.7" />
+    <circle cx="120" cy="380" r="1.2" opacity="0.4" />
+    <circle cx="90" cy="250" r="1" opacity="0.5" />
+    <circle cx="280" cy="80" r="1.6" opacity="0.6" />
+    <circle cx="330" cy="400" r="1.3" opacity="0.5" />
+    
+    <!-- Principal Sparkling Stars (4-point vectors) -->
+    <path d="M 180,90 Q 180,100 190,100 Q 180,100 180,110 Q 180,100 170,100 Q 180,100 180,90 Z" opacity="0.9" filter="url(#starGlow)" />
+    <path d="M 380,160 Q 380,168 388,168 Q 380,168 380,176 Q 380,168 372,168 Q 380,168 380,160 Z" opacity="0.8" filter="url(#starGlow)" />
+    <path d="M 260,220 Q 260,226 266,226 Q 260,226 260,232 Q 260,226 254,226 Q 260,226 260,220 Z" opacity="0.85" filter="url(#starGlow)" />
+  </g>
+
+  <!-- Radiant Crescent Moon -->
+  <g filter="url(#glow)">
+    <path d="M 312,140 
+             A 90,90 0 1,0 200,270 
+             A 78,78 0 1,1 312,140 Z" 
+          fill="url(#moonGrad)" />
+  </g>
+
+  <!-- Wispy, Minimal Night Cloud (Mostly Clear) -->
+  <path d="M 230,360 
+           a 45,45 0 0,1 60,-35 
+           a 70,70 0 0,1 110,10 
+           a 45,45 0 0,1 25,85 
+           l -195,0 
+           a 35,35 0 0,1 0,-60 Z" 
+        fill="url(#cloudGrad)" />
+</svg>

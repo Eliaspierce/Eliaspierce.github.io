@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Night Sky Gradient -->
+    <linearGradient id="nightSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c1033"/>
+      <stop offset="100%" stop-color="#1b2a4a"/>
+    </linearGradient>
+
+    <!-- Moon Gradient -->
+    <linearGradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fefeff"/>
+      <stop offset="100%" stop-color="#d1d5db"/>
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4b5563"/>
+      <stop offset="50%" stop-color="#374151"/>
+      <stop offset="100%" stop-color="#1f2937"/>
+    </linearGradient>
+
+    <!-- Rain Drop Gradient -->
+    <linearGradient id="rainGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="1"/>
+    </linearGradient>
+
+    <!-- Glow Filter for Stars and Moon -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" rx="32" fill="url(#nightSky)"/>
+
+  <!-- Stars (Night Sky Backdrop) -->
+  <g fill="#ffffff" opacity="0.8" filter="url(#glow)">
+    <circle cx="100" cy="120" r="2" />
+    <circle cx="150" cy="80" r="3" />
+    <circle cx="380" cy="90" r="2.5" />
+    <circle cx="420" cy="150" r="1.5" />
+    <circle cx="280" cy="60" r="2" />
+  </g>
+
+  <!-- Crescent Moon -->
+  <path d="M 240 80 A 75 75 0 1 0 355 175 A 60 60 0 1 1 240 80 Z" 
+        fill="url(#moonGrad)" 
+        filter="url(#glow)"
+        transform="rotate(-15 250 150) translate(-30, -20)"/>
+
+  <!-- Heavy Rain Showers (High Probability Background Layer) -->
+  <g stroke="url(#rainGrad)" stroke-width="4.5" stroke-linecap="round">
+    <!-- Row 1 -->
+    <line x1="160" y1="340" x2="140" y2="390" />
+    <line x1="220" y1="340" x2="200" y2="390" />
+    <line x1="280" y1="340" x2="260" y2="390" />
+    <line x1="340" y1="340" x2="320" y2="390" />
+    <line x1="400" y1="340" x2="380" y2="390" />
+
+    <!-- Row 2 (Dense continuous tracking for high probability) -->
+    <line x1="130" y1="410" x2="110" y2="460" />
+    <line x1="190" y1="410" x2="170" y2="460" />
+    <line x1="250" y1="410" x2="230" y2="460" />
+    <line x1="310" y1="410" x2="290" y2="460" />
+    <line x1="370" y1="410" x2="350" y2="460" />
+    <line x1="430" y1="410" x2="410" y2="460" />
+  </g>
+
+  <!-- Large Rain Cloud Overlay -->
+  <path d="M 120 320 
+           a 45 45 0 0 1 30 -80 
+           a 70 70 0 0 1 130 -30 
+           a 60 60 0 0 1 110 20 
+           a 45 45 0 0 1 10 90 
+           z" 
+        fill="url(#cloudGrad)" />
+</svg>

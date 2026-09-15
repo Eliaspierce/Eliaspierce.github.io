@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Sun Circle -->
+  <circle cx="12" cy="8" r="4" fill="#FFA500" stroke="#FF4500" />
+  <!-- Sun Rays -->
+  <path d="M12 2v2M12 12v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="#FFA500" />
+  <!-- Heat Waves -->
+  <path d="M6 17c1.5 0 1.5-1.5 3-1.5s1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5" stroke="#FF4500" />
+  <path d="M6 20c1.5 0 1.5-1.5 3-1.5s1.5 1.5 3 1.5 1.5-1.5 3-1.5 1.5 1.5 3 1.5" stroke="#FF4500" />
+</svg>

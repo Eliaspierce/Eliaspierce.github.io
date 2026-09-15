@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1a1c2e"/>
+      <stop offset="60%" stop-color="#0f101b"/>
+      <stop offset="100%" stop-color="#050508"/>
+    </radialGradient>
+
+    <!-- Hurricane Glow Gradient -->
+    <radialGradient id="eye-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff3b30" stop-opacity="0.4"/>
+      <stop offset="40%" stop-color="#ff9500" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Swirl Gradient -->
+    <linearGradient id="swirl-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b30"/>
+      <stop offset="50%" stop-color="#ff9500"/>
+      <stop offset="100%" stop-color="#007aff"/>
+    </linearGradient>
+
+    <!-- Text Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#bg-grad)"/>
+
+  <!-- Ambient Hurricane Glow -->
+  <circle cx="250" cy="210" r="180" fill="url(#eye-glow)"/>
+
+  <!-- Hurricane Graphic Symbol (Rotated Spiral Arms) -->
+  <g transform="translate(250, 210)">
+    <!-- Animation added for interactive SVG environments, fallback static rotation -->
+    <g stroke="url(#swirl-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85">
+      <!-- Center Eye Ring -->
+      <circle cx="0" cy="0" r="30" stroke-dasharray="10 15" stroke-width="4"/>
+      
+      <!-- Outer Spiral Arm 1 -->
+      <path d="M 0,-30 A 30,30 0 0,1 30,0 C 60,30 40,90 90,100 C 140,110 160,40 150,-10 C 140,-60 90,-120 10,-130" />
+      
+      <!-- Outer Spiral Arm 2 (Symmetric) -->
+      <path d="M 0,30 A 30,30 0 0,1 -30,0 C -60,-30 -40,-90 -90,-100 C -140,-110 -160,-40 -150,10 C -140,60 -90,120 -10,130" />
+      
+      <!-- Internal dynamic wisps -->
+      <path d="M -15,-15 C -40,-5 30,-50 60,-30" stroke-width="3" opacity="0.6"/>
+      <path d="M 15,15 C 40,5 -30,50 -60,30" stroke-width="3" opacity="0.6"/>
+    </g>
+    
+    <!-- Central Eye Dot -->
+    <circle cx="0" cy="0" r="8" fill="#ff3b30"/>
+  </g>
+
+  <!-- Typography / Weather Text Interface -->
+  <g font-family="system-ui, -apple-system, sans-serif" text-anchor="middle">
+    
+    <!-- Header Warning Label -->
+    <text x="250" y="70" font-size="20" font-weight="800" fill="#ff3b30" letter-spacing="4" filter="url(#glow)">
+      HURRICANE WARNING
+    </text>
+    
+    <!-- Primary Wind Speed Data -->
+    <text x="250" y="380" font-size="44" font-weight="900" fill="#ffffff" letter-spacing="1">
+      WIND SPEED
+    </text>
+    
+    <!-- Knots Value -->
+    <text x="250" y="425" font-size="32" font-weight="700" fill="#ff9500">
+      65 kt<tspan fill="#aeaeae" font-weight="400" font-size="24"> &gt;</tspan>
+    </text>
+    
+    <!-- MPH Value -->
+    <text x="250" y="460" font-size="22" font-weight="500" fill="#007aff">
+      74.8007 mph<tspan fill="#aeaeae" font-weight="400" font-size="18"> &gt;</tspan>
+    </text>
+    
+  </g>
+</svg>

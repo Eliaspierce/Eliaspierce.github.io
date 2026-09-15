@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+
+    <!-- Ice/Rain Drop Gradient -->
+    <linearGradient id="iceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="500" height="350" rx="20" fill="url(#bgGrad)"/>
+
+  <!-- Weather Icon Group (Centered Horizontally) -->
+  <g transform="translate(0, -10)">
+    <!-- Snowflakes -->
+    <g stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round">
+      <!-- Snowflake 1 (Left) -->
+      <g transform="translate(210, 145)">
+        <line x1="0" y1="-12" x2="0" y2="12"/>
+        <line x1="-12" y1="0" x2="12" y2="0"/>
+        <line x1="-8.5" y1="-8.5" x2="8.5" y2="8.5"/>
+        <line x1="-8.5" y1="8.5" x2="8.5" y2="-8.5"/>
+      </g>
+      <!-- Snowflake 2 (Right) -->
+      <g transform="translate(290, 145)">
+        <line x1="0" y1="-12" x2="0" y2="12"/>
+        <line x1="-12" y1="0" x2="12" y2="0"/>
+        <line x1="-8.5" y1="-8.5" x2="8.5" y2="8.5"/>
+        <line x1="-8.5" y1="8.5" x2="8.5" y2="-8.5"/>
+      </g>
+    </g>
+
+    <!-- Freezing Rain Drops (Angled) -->
+    <g transform="translate(250, 140) rotate(15)">
+      <!-- Left Drop -->
+      <path d="M -40,0 C -40,5 -35,10 -30,10 C -25,10 -20,5 -20,0 C -20,-10 -30,-20 -30,-20 C -30,-20 -40,-10 -40,0 Z" fill="url(#iceGrad)"/>
+      <circle cx="-30" cy="0" r="2" fill="#ffffff" opacity="0.5"/>
+      
+      <!-- Center Drop -->
+      <path d="M -10,15 C -10,20 -5,25 0,25 C 5,25 10,20 10,15 C 10,5 0,-5 0,-5 C 0,-5 -10,5 -10,15 Z" fill="url(#iceGrad)"/>
+      <circle cx="0" cy="15" r="2" fill="#ffffff" opacity="0.5"/>
+
+      <!-- Right Drop -->
+      <path d="M 20,0 C 20,5 25,10 30,10 C 35,10 40,5 40,0 C 40,-10 30,-20 30,-20 C 30,-20 20,-10 20,0 Z" fill="url(#iceGrad)"/>
+      <circle cx="30" cy="0" r="2" fill="#ffffff" opacity="0.5"/>
+    </g>
+
+    <!-- Heavy Weather Clouds -->
+    <g fill="url(#cloudGrad)">
+      <!-- Back Cloud -->
+      <path d="M 220,70 A 35,35 0 0,1 285,60 A 45,45 0 0,1 340,95 A 35,35 0 0,1 325,130 L 205,130 A 30,30 0 0,1 220,70 Z" opacity="0.5"/>
+      <!-- Front Cloud -->
+      <path d="M 180,105 A 35,35 0 0,1 230,75 A 45,45 0 0,1 305,85 A 40,40 0 0,1 330,125 A 35,35 0 0,1 305,140 L 185,140 A 30,30 0 0,1 180,105 Z"/>
+    </g>
+  </g>
+
+  <!-- Typography -->
+  <!-- Main Status -->
+  <text x="250" y="235" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" fill="#f8fafc" text-anchor="middle" letter-spacing="0.5">
+    Freezing Rain &amp; Snow
+  </text>
+
+  <!-- Subtext / Probability -->
+  <text x="250" y="275" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="500" fill="#38bdf8" text-anchor="middle" letter-spacing="1">
+    CHANCE OF PRECIP: 20%
+  </text>
+</svg>

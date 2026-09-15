@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <!-- Ice/Freezing Gradient -->
+    <linearGradient id="iceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93c5fd" />
+      <stop offset="100%" stop-color="#e0f2fe" />
+    </linearGradient>
+
+    <!-- Rain Drop Gradient -->
+    <linearGradient id="rainGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+
+    <!-- Ice Crystal Def -->
+    <g id="iceCrystal">
+      <line x1="0" y1="-8" x2="0" y2="8" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round"/>
+      <line x1="-8" y1="0" x2="8" y2="0" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round"/>
+      <line x1="-5" y1="-5" x2="5" y2="5" stroke="#e0f2fe" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-5" y1="5" x2="5" y2="-5" stroke="#e0f2fe" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- Rain Drop Def -->
+    <path id="rainDrop" d="M0,0 C1.5,2.5 3,4 3,6 C3,7.6 1.6,9 0,9 C-1.6,9 -3,7.6 -3,6 C-3,4 -1.5,2.5 0,0 Z" fill="url(#rainGrad)" />
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="500" height="500" rx="30" fill="url(#bgGrad)" />
+
+  <!-- WEATHER ARTWORK -->
+  <g transform="translate(0, -20)">
+    <!-- Back Cloud -->
+    <path d="M180,180 a30,30 0 0,1 60,0 a40,40 0 0,1 75,10 a35,35 0 0,1 15,68 l-150,0 a35,35 0 0,1 0,-78 z" fill="#334155" opacity="0.7" />
+
+    <!-- Main Front Cloud -->
+    <path d="M140,210 a45,45 0 0,1 80,-20 a60,60 0 0,1 110,15 a45,45 0 0,1 10,85 l-200,0 a45,45 0 0,1 0,-80 z" fill="url(#cloudGrad)" />
+
+    <!-- Icicles Hanging from Cloud -->
+    <polygon points="160,285 164,285 162,305" fill="url(#iceGrad)" />
+    <polygon points="195,290 201,290 198,320" fill="url(#iceGrad)" />
+    <polygon points="230,290 238,290 234,330" fill="url(#iceGrad)" />
+    <polygon points="275,290 281,290 278,315" fill="url(#iceGrad)" />
+    <polygon points="310,285 314,285 312,300" fill="url(#iceGrad)" />
+
+    <!-- Freezing Rain Elements (Falling) -->
+    <!-- Column 1 -->
+    <use href="#rainDrop" x="175" y="320" transform="rotate(15 175 320)" />
+    <use href="#iceCrystal" x="180" y="355" transform="scale(0.8)" />
+    
+    <!-- Column 2 -->
+    <use href="#iceCrystal" x="215" y="330" />
+    <use href="#rainDrop" x="210" y="370" transform="rotate(15 210 370)" />
+
+    <!-- Column 3 -->
+    <use href="#rainDrop" x="255" y="315" transform="rotate(15 255 315)" />
+    <use href="#iceCrystal" x="260" y="350" transform="scale(0.9)" />
+    <use href="#rainDrop" x="250" y="385" transform="rotate(15 250 385)" />
+
+    <!-- Column 4 -->
+    <use href="#iceCrystal" x="300" y="325" transform="scale(0.7)" />
+    <use href="#rainDrop" x="295" y="360" transform="rotate(15 295 360)" />
+  </g>
+
+  <!-- WEATHER TEXT & DATA -->
+  <!-- Main Status -->
+  <text x="250" y="415" font-family="'Segoe UI', Roboto, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#e2e8f0" text-anchor="middle" letter-spacing="1">
+    FREEZING RAIN
+  </text>
+
+  <!-- Probability Information -->
+  <g transform="translate(250, 455)">
+    <!-- Drop Icon for text -->
+    <path d="M-65,-12 C-62,-7 -60,-4 -60,0 C-60,3.3 -62.7,6 -66,6 C-69.3,6 -72,3.3 -72,0 C-72,-4 -70,-7 -67,-12 Z" fill="#38bdf8" />
+    
+    <!-- Chance of Rain Text -->
+    <text x="-50" y="5" font-family="'Segoe UI', Roboto, Helvetica, sans-serif" font-size="18" font-weight="500" fill="#94a3b8" text-anchor="start">
+      Chance of Rain: <tspan fill="#38bdf8" font-weight="700">10%</tspan>
+    </text>
+  </g>
+</svg>

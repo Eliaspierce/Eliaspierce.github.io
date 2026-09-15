@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Night Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#050515" />
+      <stop offset="40%" stop-color="#0b0b26" />
+      <stop offset="80%" stop-color="#1a1130" />
+      <stop offset="100%" stop-color="#2c163f" />
+    </linearGradient>
+
+    <!-- Moon Glow Filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Smoke Glow/Blur Filter -->
+    <filter id="smokeBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18" />
+    </filter>
+
+    <!-- Smoke Gradients -->
+    <linearGradient id="smokeGrad1" x1="0%" y1="100%" x2="30%" y2="0%">
+      <stop offset="0%" stop-color="#4a2574" stop-opacity="0" />
+      <stop offset="15%" stop-color="#6a359c" stop-opacity="0.25" />
+      <stop offset="50%" stop-color="#a370d1" stop-opacity="0.15" />
+      <stop offset="85%" stop-color="#b9e3de" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="smokeGrad2" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#1f305e" stop-opacity="0" />
+      <stop offset="20%" stop-color="#2b5c8f" stop-opacity="0.2" />
+      <stop offset="60%" stop-color="#887bb0" stop-opacity="0.15" />
+      <stop offset="90%" stop-color="#e3b9bc" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky Background -->
+  <rect width="800" height="600" fill="url(#skyGrad)" />
+
+  <!-- Stars -->
+  <g fill="#ffffff">
+    <circle cx="120" cy="80" r="1" opacity="0.6" />
+    <circle cx="340" cy="50" r="1.5" opacity="0.8" />
+    <circle cx="710" cy="150" r="1" opacity="0.5" />
+    <circle cx="650" cy="70" r="2" opacity="0.4" />
+    <circle cx="80" cy="220" r="1.5" opacity="0.7" />
+    <circle cx="230" cy="180" r="1" opacity="0.3" />
+    <circle cx="480" cy="120" r="1.2" opacity="0.6" />
+    <circle cx="750" cy="280" r="1" opacity="0.5" />
+    <circle cx="160" cy="300" r="1.5" opacity="0.4" />
+  </g>
+
+  <!-- Deep Low-Horizon Stars / Distant Lights -->
+  <g fill="#ffdfa9" opacity="0.5">
+    <circle cx="520" cy="380" r="1" />
+    <circle cx="580" cy="400" r="1" />
+    <circle cx="280" cy="410" r="1.2" />
+  </g>
+
+  <!-- The Moon -->
+  <circle cx="600" cy="160" r="45" fill="#fffbe0" filter="url(#glow)" opacity="0.9" />
+  <circle cx="600" cy="160" r="45" fill="#e2dac2" opacity="0.3" mask="url(#moonCraters)" />
+  
+  <!-- Subtle Moon Ambient Overlay -->
+  <circle cx="600" cy="160" r="120" fill="#6a5acd" filter="url(#smokeBlur)" opacity="0.15" />
+
+  <!-- DISTANT BACKGROUND SMOKE (Behind mountains) -->
+  <path d="M 150,500 C 250,420 350,320 500,380 C 650,440 750,350 850,400 L 850,600 L -50,600 Z" fill="url(#smokeGrad2)" filter="url(#smokeBlur)" />
+
+  <!-- Distant Mountain Silhouettes -->
+  <path d="M -50,480 L 120,380 L 280,440 L 450,350 L 620,430 L 730,370 L 850,420 L 850,600 L -50,600 Z" fill="#0b071a" />
+
+  <!-- MIDGROUND SMOKE (Layered between ridges) -->
+  <path d="M -50,480 C 50,400 200,350 350,410 C 500,470 650,380 850,450 L 850,600 L -50,600 Z" fill="url(#smokeGrad1)" filter="url(#smokeBlur)" />
+  
+  <!-- Midground Ridge -->
+  <path d="M -50,520 L 90,460 L 250,490 L 410,430 L 580,480 L 720,440 L 850,500 L 850,600 L -50,600 Z" fill="#070412" />
+
+  <!-- FOREGROUND BILLOWING SMOKE (Dynamic, swirling shapes) -->
+  <!-- Left-to-Right sweeping smoke strand -->
+  <path d="M -100,550 C 100,520 150,380 300,360 C 480,330 550,460 700,420 C 800,400 850,450 900,500 L 900,600 L -100,600 Z" fill="url(#smokeGrad1)" filter="url(#smokeBlur)" />
+
+  <!-- Rising wisps on the right side -->
+  <path d="M 450,600 C 500,500 520,410 580,350 C 650,280 720,250 850,220 L 850,600 Z" fill="url(#smokeGrad2)" filter="url(#smokeBlur)" />
+
+  <!-- Central heavy smoke accent -->
+  <path d="M 200,600 C 250,510 320,460 400,450 C 500,440 580,380 650,300 C 700,240 750,250 800,200 L 800,600 Z" fill="url(#smokeGrad1)" filter="url(#smokeBlur)" opacity="0.7"/>
+
+  <!-- Crisp Foreground Rocks / Terrain -->
+  <path d="M -10,600 Q 120,540 280,560 T 600,550 Q 720,530 810,570 L 810,600 Z" fill="#03020a" />
+  
+  <!-- Subtle Foreground Highlight from Sky/Moon -->
+  <path d="M -10,600 Q 120,540 280,560 T 600,550 Q 720,530 810,570" fill="none" stroke="#372647" stroke-width="3" filter="url(#smokeBlur)" opacity="0.6" />
+</svg>

@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b0d19" />
+      <stop offset="50%" stop-color="#06070c" />
+      <stop offset="100%" stop-color="#020205" />
+    </linearGradient>
+
+    <!-- Smoke Base Material Gradient -->
+    <linearGradient id="smoke-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="15%" stop-color="#e0e4eb" stop-opacity="0.25" />
+      <stop offset="50%" stop-color="#b0bcd0" stop-opacity="0.15" />
+      <stop offset="85%" stop-color="#7a8a9e" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Radial Mask to Soften Edge Borders -->
+    <radialGradient id="glow-mask" cx="50%" cy="70%" r="50%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="1" />
+      <stop offset="40%" stop-color="#fff" stop-opacity="0.8" />
+      <stop offset="80%" stop-color="#fff" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#fff" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- High-frequency Turbulence for Wispy Strands -->
+    <filter id="wispy-smoke" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.006" numOctaves="5" result="noise" seed="42"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="95" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="6" result="blurred"/>
+      <feMerge>
+        <feMergeNode in="blurred"/>
+        <feMergeNode in="displaced"/>
+      </feMerge>
+    </filter>
+
+    <!-- Heavy/Dense Turbulence for Smoke Core -->
+    <filter id="dense-smoke" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.004" numOctaves="6" result="noise" seed="85"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="140" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="15"/>
+    </filter>
+
+    <!-- Composite Mask Overlay -->
+    <mask id="feather-mask">
+      <rect width="800" height="600" fill="url(#glow-mask)" filter="blur(10px)"/>
+    </mask>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)" />
+
+  <!-- Smoke Vector Group Component -->
+  <g mask="url(#feather-mask)">
+    
+    <!-- Layer 1: Ambient Background Mist (Broad, Soft) -->
+    <g filter="url(#dense-smoke)" opacity="0.4">
+      <path d="M 360 550 
+               C 320 420, 480 300, 380 200 
+               C 300 120, 460 80, 400 20 
+               L 450 20 
+               C 520 90, 360 150, 440 250 
+               C 520 350, 400 450, 420 550 Z" 
+            fill="url(#smoke-grad)" />
+    </g>
+
+    <!-- Layer 2: Detailed Foreground Strands (Wispy, Sharp) -->
+    <g filter="url(#wispy-smoke)" opacity="0.6">
+      <!-- Central Rising Plume -->
+      <path d="M 390 530 
+               C 360 440, 430 360, 370 260 
+               C 320 180, 440 120, 390 40 
+               C 430 100, 340 160, 410 240 
+               C 460 320, 380 420, 410 530 Z" 
+            fill="url(#smoke-grad)" />
+            
+      <!-- Left Secondary Branch -->
+      <path d="M 380 480 
+               C 300 400, 350 310, 310 230 
+               C 280 160, 360 90, 330 50 
+               C 380 110, 310 180, 350 250 
+               C 390 320, 330 410, 395 480 Z" 
+            fill="url(#smoke-grad)" />
+
+      <!-- Right Secondary Branch -->
+      <path d="M 410 500 
+               C 480 410, 420 330, 490 240 
+               C 540 170, 450 110, 480 60 
+               C 440 120, 500 190, 450 270 
+               C 410 340, 460 430, 415 500 Z" 
+            fill="url(#smoke-grad)" />
+    </g>
+
+    <!-- Layer 3: Dynamic Micro-textures (Fine Noise Accents) -->
+    <g filter="url(#wispy-smoke)" opacity="0.33">
+      <circle cx="380" cy="420" r="35" fill="url(#smoke-grad)"/>
+      <circle cx="430" cy="310" r="45" fill="url(#smoke-grad)"/>
+      <circle cx="360" cy="210" r="40" fill="url(#smoke-grad)"/>
+      <circle cx="420" cy="120" r="50" fill="url(#smoke-grad)"/>
+    </g>
+  </g>
+
+  <!-- Light Source Highlight Base (Ember/Source Grounding) -->
+  <ellipse cx="400" cy="545" rx="12" ry="4" fill="#ffffff" opacity="0.1" filter="blur(5px)"/>
+</svg>

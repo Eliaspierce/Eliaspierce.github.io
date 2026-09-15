@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="100%" height="100%">
+  <!-- Background for contrast -->
+  <rect width="100%" height="100%" fill="#1a1a2e" rx="15"/>
+
+  <!-- Weather Icon Graphic -->
+  <g transform="translate(250, 95)">
+    <!-- Moon (Almost Full 90%) -->
+    <path d="M 0 -45 A 45 45 0 1 1 0 45 A 35 45 0 0 1 0 -45 Z" fill="#e0e0e0" transform="translate(-20, -10) rotate(-15)"/>
+    
+    <!-- Heavy Cloud -->
+    <path d="M -20 20 
+             a 25 25 0 0 1 30 -10 
+             a 35 35 0 0 1 60 10 
+             a 25 25 0 0 1 0 50 
+             l -90 0 
+             a 25 25 0 0 1 0 -50 z" 
+          fill="#758296"/>
+    
+    <!-- Freezing Rain Drops -->
+    <g fill="#a5f3fc">
+      <path d="M -10 75 l -4 12 a 3 3 0 1 0 6 0 z" />
+      <path d="M 15 80 l -4 12 a 3 3 0 1 0 6 0 z" />
+      <path d="M 40 75 l -4 12 a 3 3 0 1 0 6 0 z" />
+    </g>
+
+    <!-- Snowflakes -->
+    <g stroke="#ffffff" stroke-width="2" stroke-linecap="round">
+      <!-- Snowflake 1 -->
+      <g transform="translate(-25, 75) scale(0.7)">
+        <line x1="0" y1="-8" x2="0" y2="8" />
+        <line x1="-8" y1="0" x2="8" y2="0" />
+        <line x1="-6" y1="-6" x2="6" y2="6" />
+        <line x1="-6" y1="6" x2="6" y2="-6" />
+      </g>
+      <!-- Snowflake 2 -->
+      <g transform="translate(2.5, 82) scale(0.7)">
+        <line x1="0" y1="-8" x2="0" y2="8" />
+        <line x1="-8" y1="0" x2="8" y2="0" />
+        <line x1="-6" y1="-6" x2="6" y2="6" />
+        <line x1="-6" y1="6" x2="6" y2="-6" />
+      </g>
+      <!-- Snowflake 3 -->
+      <g transform="translate(30, 78) scale(0.7)">
+        <line x1="0" y1="-8" x2="0" y2="8" />
+        <line x1="-8" y1="0" x2="8" y2="0" />
+        <line x1="-6" y1="-6" x2="6" y2="6" />
+        <line x1="-6" y1="6" x2="6" y2="-6" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Typography -->
+  <g font-family="system-ui, -apple-system, sans-serif" text-anchor="middle" fill="#ffeb3b">
+    <text x="250" y="210" font-size="28" font-weight="bold" letter-spacing="1">FREEZING RAIN &amp; SNOW</text>
+    <text x="250" y="250" font-size="20" font-weight="600" opacity="0.9">Almost Full (90% Precip)</text>
+  </g>
+</svg>

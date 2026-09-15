@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <!-- Definitions for gradients and drop shadows -->
+  <defs>
+    <!-- Background Gradient: Deep wintry storm blues -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <!-- Cloud Gradient: Heavy, moisture-laden storm clouds -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#64748B" />
+      <stop offset="70%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <!-- Ice/Freezing Rain Gradient: Piercing icy blue -->
+    <linearGradient id="iceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#93C5FD" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+
+    <!-- Soft Glow Filter for Text and Indicators -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bgGrad)" />
+
+  <!-- DECORATIVE WEATHER ELEMENTS (Snowflakes & Freezing Rain Trails) -->
+  <g opacity="0.25">
+    <!-- Background Snowflakes -->
+    <circle cx="100" cy="80" r="3" fill="#FFFFFF" />
+    <circle cx="250" cy="60" r="4" fill="#FFFFFF" />
+    <circle cx="550" cy="90" r="2" fill="#FFFFFF" />
+    <circle cx="700" cy="70" r="5" fill="#FFFFFF" />
+    <!-- Background Rain Streaks -->
+    <line x1="150" y1="120" x2="140" y2="160" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round" />
+    <line x1="650" y1="110" x2="640" y2="150" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round" />
+  </g>
+
+  <!-- MAIN WEATHER ICON GRAPHIC -->
+  <g transform="translate(0, -10)">
+    <!-- Central Storm Cloud -->
+    <path d="M 320 260 
+             A 45 45 0 0 1 320 170 
+             A 65 65 0 0 1 440 150 
+             A 50 50 0 0 1 490 220 
+             A 40 40 0 0 1 460 260 
+             Z" 
+          fill="url(#cloudGrad)" />
+
+    <!-- Precipitation: Snowflakes (Left Side) -->
+    <g stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.9">
+      <!-- Snowflake 1 -->
+      <g transform="translate(330, 290)">
+        <line x1="-12" y1="0" x2="12" y2="0" />
+        <line x1="0" y1="-12" x2="0" y2="12" />
+        <line x1="-8" y1="-8" x2="8" y2="8" />
+        <line x1="-8" y1="8" x2="8" y2="-8" />
+      </g>
+      <!-- Snowflake 2 -->
+      <g transform="translate(365, 330) scale(0.8)">
+        <line x1="-12" y1="0" x2="12" y2="0" />
+        <line x1="0" y1="-12" x2="0" y2="12" />
+        <line x1="-8" y1="-8" x2="8" y2="8" />
+        <line x1="-8" y1="8" x2="8" y2="-8" />
+      </g>
+    </g>
+
+    <!-- Precipitation: Freezing Rain Drops (Right Side) -->
+    <g fill="url(#iceGrad)" opacity="0.9">
+      <!-- Ice Drop 1 -->
+      <path d="M 425 285 C 425 293 419 299 412 299 C 405 299 400 293 400 285 C 400 275 412 260 412 260 C 412 260 425 275 425 285 Z" transform="rotate(15 412 285)" />
+      <!-- Ice Drop 2 -->
+      <path d="M 455 315 C 455 323 449 329 442 329 C 435 329 430 323 430 315 C 430 305 442 290 442 290 C 442 290 455 305 455 315 Z" transform="rotate(15 442 315)" />
+    </g>
+
+    <!-- Mixed Weather Splashes/Impact Lines -->
+    <path d="M 315 360 Q 330 355 345 360 M 430 360 Q 445 355 460 360" stroke="#93C5FD" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- TYPOGRAPHY & DATA DATA DISPLAY -->
+  <!-- Primary Alert/Condition Text -->
+  <text x="400" y="405" 
+        font-family="'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" 
+        font-size="34" 
+        font-weight="800" 
+        fill="#22C55E" 
+        text-anchor="middle" 
+        letter-spacing="1.5"
+        filter="url(#glow)">
+    FREEZING RAIN AND SNOW
+  </text>
+
+  <!-- Precipitation Probability Display -->
+  <g transform="translate(400, 455)">
+    <!-- 100% Precip Value -->
+    <text x="-10" y="0" 
+          font-family="'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" 
+          font-size="28" 
+          font-weight="700" 
+          fill="#4ADE80" 
+          text-anchor="end">
+      100%
+    </text>
+    
+    <!-- Precip Label -->
+    <text x="10" y="-2" 
+          font-family="'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" 
+          font-size="20" 
+          font-weight="500" 
+          fill="#16A34A" 
+          text-anchor="start" 
+          letter-spacing="1">
+      PRECIP
+    </text>
+  </g>
+</svg>

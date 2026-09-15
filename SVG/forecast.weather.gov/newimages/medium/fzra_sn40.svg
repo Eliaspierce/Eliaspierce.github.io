@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <!-- Text Metallic/Ice Gradient -->
+    <linearGradient id="iceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="40%" stop-color="#E2F1FF" />
+      <stop offset="70%" stop-color="#80BFFF" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+
+    <!-- Accent Cyan Gradient -->
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <filter id="textShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title-sub { font-family: 'Montserrat', 'Arial Black', sans-serif; font-size: 28px; fill: #94A3B8; letter-spacing: 6px; font-weight: 800; text-transform: uppercase; }
+    .title-main { font-family: 'Montserrat', 'Arial Black', sans-serif; font-size: 68px; fill: url(#iceGrad); font-weight: 900; letter-spacing: 2px; }
+    .title-event { font-family: 'Montserrat', 'Arial Black', sans-serif; font-size: 32px; fill: url(#cyanGrad); font-weight: 700; letter-spacing: 12px; text-transform: uppercase; }
+    .stat-val { font-family: 'Montserrat', 'Arial Black', sans-serif; font-size: 110px; fill: #FFFFFF; font-weight: 900; }
+    .stat-lbl { font-family: 'Segoe UI', Roboto, sans-serif; font-size: 20px; fill: #94A3B8; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+  </style>
+
+  <!-- Background Layer -->
+  <rect width="800" height="500" fill="url(#bgGrad)" />
+
+  <!-- Decorative Weather Graphics (Snowflakes & Ice Clusters) -->
+  <g opacity="0.15">
+    <!-- Snowflake Left -->
+    <g transform="translate(100, 120) scale(0.8)">
+      <path d="M0,-50 L0,50 M-50,0 L50,0 M-35,-35 L35,35 M-35,35 L35,-35" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+      <path d="M0,-30 L8,-38 M0,-30 L-8,-38 M0,30 L8,38 M0,30 L-8,38 M-30,0 L-38,8 M-30,0 L-38,-8 M30,0 L38,8 M30,0 L38,-8" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <!-- Snowflake Right -->
+    <g transform="translate(700, 380) scale(1.1)">
+      <path d="M0,-50 L0,50 M-50,0 L50,0 M-35,-35 L35,35 M-35,35 L35,-35" stroke="#22D3EE" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Central Content Layout -->
+  <g transform="translate(0, 30)">
+    
+    <!-- Top Sub-Header -->
+    <text x="400" y="70" text-anchor="middle" class="title-sub" filter="url(#textShadow)">Freezing Rain</text>
+    
+    <!-- Main Headline Middle -->
+    <text x="400" y="145" text-anchor="middle" class="title-main" filter="url(#textShadow)">&amp; SNOW</text>
+    
+    <!-- Event Sub-Header -->
+    <text x="406" y="200" text-anchor="middle" class="title-event" filter="url(#glow)">Event of the R &amp; S</text>
+
+    <!-- Divider Line -->
+    <line x1="250" y1="235" x2="550" y2="235" stroke="url(#cyanGrad)" stroke-width="4" stroke-linecap="round" opacity="0.8" />
+
+    <!-- Percentage Display Section -->
+    <g transform="translate(400, 270)">
+      <!-- Outer Glow Container for 40% -->
+      <rect x="-140" y="0" width="280" height="150" rx="20" fill="#1E293B" stroke="#38BDF8" stroke-width="2" opacity="0.6" filter="url(#textShadow)"/>
+      
+      <!-- 40% Text -->
+      <text x="0" y="105" text-anchor="middle" class="stat-val" filter="url(#glow)">40%</text>
+      
+      <!-- Probability Label -->
+      <text x="0" y="140" text-anchor="middle" class="stat-lbl">Probability</text>
+    </g>
+    
+  </g>
+
+  <!-- Decorative Rain/Ice Drops at the bottom -->
+  <g opacity="0.4" stroke="#38BDF8" stroke-width="2" stroke-linecap="round">
+    <line x1="200" y1="440" x2="190" y2="460" />
+    <line x1="230" y1="430" x2="220" y2="450" />
+    <line x1="570" y1="430" x2="560" y2="450" />
+    <line x1="600" y1="440" x2="590" y2="460" />
+  </g>
+</svg>

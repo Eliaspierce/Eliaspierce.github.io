@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Night Gradient -->
+    <linearGradient id="nightSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#050b14" />
+      <stop offset="50%" stop-color="#101f38" />
+      <stop offset="100%" stop-color="#1a2e4c" />
+    </linearGradient>
+
+    <!-- Blizzard Wind Soft Glow -->
+    <linearGradient id="windGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Text Metallic Silver Gradient -->
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#e0f0ff" />
+      <stop offset="100%" stop-color="#8ca8cd" />
+    </linearGradient>
+
+    <!-- Subtext Glow Gradient -->
+    <linearGradient id="subtextGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a2c2e8" />
+      <stop offset="50%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#a2c2e8" />
+    </linearGradient>
+
+    <!-- Basic Soft Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Intense Glow for Highlights -->
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComponentTransfer in="blur" result="brightBlur">
+        <feFuncA type="linear" slope="1.5"/>
+      </feComponentTransfer>
+      <feComposite in="SourceGraphic" in2="brightBlur" operator="over" />
+    </filter>
+
+    <!-- Snowflake Shape Definition -->
+    <g id="snowflake">
+      <line x1="0" y1="-12" x2="0" y2="12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-12" y1="0" x2="12" y2="0" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-8" y1="-8" x2="8" y2="8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-8" y1="8" x2="8" y2="-8" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="2" fill="#ffffff"/>
+    </g>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#nightSky)" />
+
+  <!-- Distant Atmospheric Snow / Fog Layer -->
+  <g opacity="0.15">
+    <circle cx="100" cy="80" r="60" fill="#ffffff" filter="url(#strongGlow)" />
+    <circle cx="450" cy="250" r="100" fill="#ffffff" filter="url(#strongGlow)" />
+    <circle cx="700" cy="400" r="80" fill="#ffffff" filter="url(#strongGlow)" />
+  </g>
+
+  <!-- Swirling Blizzard Wind Lines (Angled) -->
+  <g fill="none" stroke="url(#windGlow)" stroke-linecap="round">
+    <path d="M-100,80 Q 200,20 500,100 T 900,40" stroke-width="12" transform="rotate(-8 400 250)" />
+    <path d="M-50,220 Q 250,140 550,260 T 850,180" stroke-width="18" transform="rotate(-12 400 250)" />
+    <path d="M-100,380 Q 150,320 480,410 T 900,300" stroke-width="15" transform="rotate(-10 400 250)" />
+    <path d="M50,150 Q 300,240 600,130 T 800,220" stroke-width="8" opacity="0.7" transform="rotate(-5 400 250)" />
+  </g>
+
+  <!-- Background Small Snowflakes (Depth) -->
+  <g fill="#ffffff" opacity="0.4">
+    <circle cx="70" cy="40" r="2" />
+    <circle cx="150" cy="180" r="1.5" />
+    <circle cx="280" cy="90" r="3" />
+    <circle cx="320" cy="280" r="2" />
+    <circle cx="450" cy="60" r="1.5" />
+    <circle cx="520" cy="380" r="2.5" />
+    <circle cx="650" cy="150" r="3" />
+    <circle cx="730" cy="290" r="1.5" />
+    <circle cx="780" cy="70" r="2" />
+    <circle cx="200" cy="420" r="3" />
+    <circle cx="85" cy="310" r="2" />
+  </g>
+
+  <!-- Midground Snowflake Shapes (Blown by wind) -->
+  <g opacity="0.6" transform="translate(0,0)">
+    <use href="#snowflake" x="120" y="110" transform="scale(0.6) rotate(15 120 110)" />
+    <use href="#snowflake" x="680" y="80" transform="scale(0.5) rotate(45 680 80)" />
+    <use href="#snowflake" x="250" y="350" transform="scale(0.7) rotate(33 250 350)" />
+    <use href="#snowflake" x="580" y="270" transform="scale(0.5) rotate(120 580 270)" />
+  </g>
+
+  <!-- Main Typography Group -->
+  <g text-anchor="middle" id="typography">
+    <!-- BLIZZARD NIGHT -->
+    <text x="400" y="220" 
+          fill="url(#textGrad)" 
+          font-family="'Montserrat', 'Arial Black', sans-serif" 
+          font-size="76" 
+          font-weight="900" 
+          letter-spacing="6" 
+          filter="url(#glow)">
+      BLIZZARD NIGHT
+    </text>
+
+    <!-- CHANCE OF SNOW NEARBY -->
+    <text x="400" y="285" 
+          fill="url(#subtextGrad)" 
+          font-family="'Inter', 'Helvetica Neue', sans-serif" 
+          font-size="22" 
+          font-weight="600" 
+          letter-spacing="12" 
+          opacity="0.9"
+          filter="url(#glow)">
+      CHANCE 40%
+    </text>
+  </g>
+
+  <!-- Foreground Dynamic/Sharp Snow Elements -->
+  <g fill="#ffffff" opacity="0.85">
+    <!-- Fast-moving horizontal snow streaks -->
+    <rect x="180" y="140" width="45" height="1.5" rx="0.7" transform="rotate(-10 180 140)" />
+    <rect x="480" y="240" width="70" height="2" rx="1" transform="rotate(-14 480 240)" />
+    <rect x="300" y="310" width="35" height="1.2" rx="0.6" transform="rotate(-8 300 310)" />
+    <rect x="620" y="190" width="55" height="1.8" rx="0.9" transform="rotate(-12 620 190)" />
+    
+    <!-- Large Crispy Foreground Snowflakes overlapping text slightly -->
+    <use href="#snowflake" x="220" y="240" transform="scale(1.2) rotate(22 220 240)" filter="url(#glow)" />
+    <use href="#snowflake" x="590" y="160" transform="scale(1) rotate(57 590 160)" filter="url(#glow)" />
+    <use href="#snowflake" x="380" y="340" transform="scale(0.8) rotate(10 380 340)" />
+    
+    <!-- Sharp foreground dots -->
+    <circle cx="510" cy="110" r="4" filter="url(#glow)" />
+    <circle cx="290" cy="200" r="3.5" />
+    <circle cx="430" cy="265" r="3" />
+  </g>
+</svg>

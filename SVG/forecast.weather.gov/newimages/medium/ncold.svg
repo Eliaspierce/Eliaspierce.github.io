@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="coldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00b4db" />
+      <stop offset="100%" stop-color="#0083b0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background panel -->
+  <rect width="300" height="120" rx="16" fill="#eef8fc" stroke="#bce1f0" stroke-width="2"/>
+  
+  <!-- Snowflake / Cold Icon Symbol -->
+  <g transform="translate(35, 60) scale(0.9)" stroke="url(#coldGrad)" stroke-width="3" stroke-linecap="round">
+    <line x1="0" y1="-25" x2="0" y2="25" />
+    <line x1="-21.65" y1="-12.5" x2="21.65" y2="12.5" />
+    <line x1="-21.65" y1="12.5" x2="21.65" y2="-12.5" />
+    <!-- Little snowflake branches -->
+    <polyline points="0,-18 -6,-23" />
+    <polyline points="0,-18 6,-23" />
+    <polyline points="0,18 -6,23" />
+    <polyline points="0,18 6,23" />
+    <circle cx="0" cy="0" r="4" fill="url(#coldGrad)" />
+  </g>
+
+  <!-- Text Section -->
+  <text x="95" y="52" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="24" fill="#005b7f">
+    FREEZING
+  </text>
+  
+  <text x="95" y="82" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="18" fill="#0083b0">
+    0°C / 32°F
+  </text>
+</svg>

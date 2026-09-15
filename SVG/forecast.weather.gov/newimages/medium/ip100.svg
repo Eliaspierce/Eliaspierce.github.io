@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="40%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#311042" />
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8" />
+      <stop offset="50%" stop-color="#64748b" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <!-- Ice Pellet Gradient -->
+    <linearGradient id="iceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0" />
+      <stop offset="30%" stop-color="#93c5fd" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+
+    <!-- Soft Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Text Glow Filter -->
+    <filter id="textGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="500" height="500" rx="30" fill="url(#skyGrad)" />
+
+  <!-- WEATHER ARTWORK -->
+  <g transform="translate(0, -20)">
+    <!-- Background Cloud Glow -->
+    <path d="M 180 230 Q 140 230 140 190 Q 140 140 190 140 Q 210 100 260 100 Q 320 100 330 150 Q 370 150 370 190 Q 370 230 330 230 Z" fill="#38bdf8" opacity="0.15" filter="url(#glow)"/>
+
+    <!-- Main Weather Cloud -->
+    <path d="M 180 230 Q 140 230 140 190 Q 140 140 190 140 Q 210 100 260 100 Q 320 100 330 150 Q 370 150 370 190 Q 370 230 330 230 Z" fill="url(#cloudGrad)" />
+    
+    <!-- Cloud Highlight Line -->
+    <path d="M 155 180 Q 150 155 190 150 Q 212 115 260 115 Q 310 115 320 155" fill="none" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
+
+    <!-- Falling Ice Pellets (Sleet/Graupel Visuals) -->
+    <!-- Row 1 -->
+    <circle cx="180" cy="270" r="7" fill="url(#iceGrad)" filter="url(#glow)" />
+    <circle cx="240" cy="260" r="9" fill="url(#iceGrad)" filter="url(#glow)" />
+    <circle cx="300" cy="275" r="6" fill="url(#iceGrad)" filter="url(#glow)" />
+    <circle cx="350" cy="265" r="8" fill="url(#iceGrad)" filter="url(#glow)" />
+
+    <!-- Row 2 -->
+    <circle cx="150" cy="315" r="6" fill="url(#iceGrad)" filter="url(#glow)" />
+    <circle cx="210" cy="305" r="8" fill="url(#iceGrad)" filter="url(#glow)" />
+    <circle cx="270" cy="320" r="7" fill="url(#iceGrad)" filter="url(#glow)" />
+    <circle cx="325" cy="310" r="9" fill="url(#iceGrad)" filter="url(#glow)" />
+
+    <!-- Kinetic/Bounce Streaks -->
+    <line x1="180" y1="250" x2="180" y2="260" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+    <line x1="240" y1="235" x2="240" y2="248" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+    <line x1="300" y1="252" x2="300" y2="265" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+    <line x1="350" y1="240" x2="350" y2="252" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+    
+    <line x1="210" y1="280" x2="210" y2="292" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+    <line x1="270" y1="295" x2="270" y2="308" stroke="#93c5fd" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+  </g>
+
+  <!-- TYPOGRAPHY / WEATHER TEXT -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <!-- Main Alert Status -->
+    <text x="250" y="405" font-size="28" font-weight="800" fill="#f1f5f9" letter-spacing="1">
+      ICE PELLETS
+    </text>
+    
+    <!-- Subtext / Probability -->
+    <text x="250" y="440" font-size="18" font-weight="500" fill="#38bdf8" letter-spacing="0.5" filter="url(#textGlow)">
+      MAX FULL 100%
+    </text>
+  </g>
+</svg>

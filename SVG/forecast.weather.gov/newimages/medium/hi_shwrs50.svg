@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Sky Background Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1c29" />
+      <stop offset="100%" stop-color="#2a334a" />
+    </linearGradient>
+
+    <!-- Cloud Gradient -->
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="70%" stop-color="#axb9cc" />
+      <stop offset="100%" stop-color="#808da4" />
+    </linearGradient>
+
+    <!-- Rain Drop Gradient -->
+    <linearGradient id="rainGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#42a5f5" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#007acc" stop-opacity="1" />
+    </linearGradient>
+
+    <!-- Drop Shadow for Text Depth -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="100%" height="100%" fill="url(#skyGrad)" rx="32" />
+
+  <!-- WEATHER ICON GRAPHIC -->
+  <g transform="translate(0, -20)">
+    <!-- Rain Showers (Behind Main Cloud Elements) -->
+    <g fill="url(#rainGrad)">
+      <!-- Rain Streak 1 -->
+      <rect x="200" y="270" width="6" height="40" rx="3" transform="skewX(-15)" />
+      <!-- Rain Streak 2 -->
+      <rect x="240" y="290" width="6" height="50" rx="3" transform="skewX(-15)" />
+      <!-- Rain Streak 3 -->
+      <rect x="280" y="265" width="6" height="45" rx="3" transform="skewX(-15)" />
+      <!-- Rain Streak 4 -->
+      <rect x="320" y="285" width="6" height="35" rx="3" transform="skewX(-15)" />
+    </g>
+
+    <!-- Heavy Cloud Body -->
+    <path d="M 320 260 
+             A 50 50 0 0 0 360 170 
+             A 65 65 0 0 0 240 130 
+             A 55 55 0 0 0 150 185 
+             A 45 45 0 0 0 170 260 
+             Z" 
+          fill="url(#cloudGrad)" />
+  </g>
+
+  <!-- WEATHER METRICS TEXT SECTION -->
+  <g text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" filter="url(#shadow)">
+    <!-- Weather Condition Header -->
+    <text x="256" y="360" font-size="38" font-weight="800" fill="#ffffff" letter-spacing="1.5">CHANCE OF &#x1f327; LIGHT RAIN</text>
+    <text x="256" y="415" font-size="28" font-weight="600" fill="#bbbbbb">
+      CHANCE OF
+    </text>
+		<text x="256" y="455" font-size="28" font-weight="400" fill="#90a4ae">
+      &#x00bd; HALF &#x00bd;
+    </text>
+  </g>
+</svg>
