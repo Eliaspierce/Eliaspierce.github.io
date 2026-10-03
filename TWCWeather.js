@@ -7,7 +7,7 @@ class TWCWeather {
   getInfo() {
     return {
       id: "TWCWeather",
-      name: "The Weather Channel",
+      name: "The Weather Chanel",
       blockIconURI: "https://weather.com/favicon.ico",
       blocks: [
         {
@@ -143,7 +143,7 @@ class TWCWeather {
         {
           opcode: "liveTime",
           blockType: Scratch.BlockType.REPORTER,
-          text: "Live Time"
+          text: "Current Live Time"
         },
         {
           opcode: "getGeocode",
@@ -169,6 +169,16 @@ class TWCWeather {
           opcode: "nextHourlyUVIndex",
           blockType: Scratch.BlockType.REPORTER,
           text: "Next Hourly UV Index"
+        },
+        {
+          opcode: "dailyTime",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Daily Time"
+        },
+        {
+          opcode: "nextHourlyTime",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Next Hourly Time"
         }
       ]
     };
@@ -349,6 +359,14 @@ class TWCWeather {
   nextHourlyUVIndex() {
     const h = this._hour();
     return h && h.uvIndex ? String(h.uvIndex[0]) : "";
+  }
+  dailyTime() {
+    const dp = this._dp();
+    return dp && dp.dayOrNight ? String(dp.dayOrNight[this._uvIdx()]) : "";
+  }
+  nextHourlyTime() {
+    const h = this._hour();
+    return h && h.dayOrNight ? String(h.dayOrNight[0]) : "";
   }
 }
 Scratch.extensions.register(new TWCWeather());
