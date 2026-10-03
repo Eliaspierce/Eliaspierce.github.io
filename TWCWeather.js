@@ -7,7 +7,7 @@ class TWCWeather {
   getInfo() {
     return {
       id: "TWCWeather",
-      name: "The Weather Chanel",
+      name: "The Weather Channel",
       blockIconURI: "https://weather.com/favicon.ico",
       blocks: [
         {
@@ -139,6 +139,21 @@ class TWCWeather {
           opcode: "dailyIcon",
           blockType: Scratch.BlockType.REPORTER,
           text: "Daily Icon"
+        },
+        {
+          opcode: "liveTime",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Live Time"
+        },
+        {
+          opcode: "getGeocode",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Get Geocode"
+        },
+        {
+          opcode: "alertsHeadlines",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Alerts Headlines"
         }
       ]
     };
@@ -147,11 +162,12 @@ class TWCWeather {
     return (Math.random() * (max - min) + min).toFixed(3);
   }
   _url(lat, lon) {
-    return "https://api.weather.com/v3/aggcommon/v3-wx-observations-current;v3-wx-forecast-daily-3day;v3-wx-forecast-hourly-6hour?geocode=" + lat + "," + lon + "&units=e&language=en-US&format=json&apiKey=" + this._apiKey;
+    return "https://api.weather.com/v3/aggcommon/v3-wx-observations-current;v3-wx-forecast-daily-3day;v3-wx-forecast-hourly-6hour;v3alertsHeadlines?geocode=" + lat + "," + lon + "&units=e&language=en-US&format=json&apiKey=" + this._apiKey;
   }
   async _fetch(lat, lon) {
     const res = await fetch(this._url(lat, lon));
     this._data = await res.json();
+    this._geocode = lat + "," + lon;
   }
   async getMosesLake() {
     await this._fetch("47.131", "-119.279");
@@ -286,6 +302,21 @@ class TWCWeather {
     const dp = this._dp();
     if (!dp || !dp.iconCode) return "";
     return String(dp.iconCode[this._coverIdx()]);
+  }
+  _alerts() {
+    return (this._data && this._data["v3alertsHeadlines"]) || null;
+  }
+  liveTime() {
+    const c = this._cur();
+    return c ? String(c.dayOrNight) : "";
+  }
+  getGeocode() {
+    return this._geocode || "";
+  }
+  alertsHeadlines() {
+    const a = this._alerts();
+    if (!a || !a.alerts) return "";
+    return a.alerts.map(x => x.headlineText || x.eventDescription || "").filter(Boolean).join("; ");
   }
 }
 Scratch.extensions.register(new TWCWeather());
