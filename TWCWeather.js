@@ -154,6 +154,21 @@ class TWCWeather {
           opcode: "alertsHeadlines",
           blockType: Scratch.BlockType.REPORTER,
           text: "Alerts Headlines"
+        },
+        {
+          opcode: "dailyUVIndex",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Daily UV Index"
+        },
+        {
+          opcode: "currentUVIndex",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Current UV Index"
+        },
+        {
+          opcode: "nextHourlyUVIndex",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Next Hourly UV Index"
         }
       ]
     };
@@ -317,6 +332,23 @@ class TWCWeather {
     const a = this._alerts();
     if (!a || !a.alerts) return "";
     return a.alerts.map(x => x.headlineText || x.eventDescription || "").filter(Boolean).join("; ");
+  }
+  _uvIdx() {
+    const dp = this._dp();
+    if (!dp || !dp.uvIndex) return 0;
+    return dp.uvIndex[0] === null ? 1 : 0;
+  }
+  dailyUVIndex() {
+    const dp = this._dp();
+    return dp && dp.uvIndex ? String(dp.uvIndex[this._uvIdx()]) : "";
+  }
+  currentUVIndex() {
+    const c = this._cur();
+    return c ? String(c.uvIndex) : "";
+  }
+  nextHourlyUVIndex() {
+    const h = this._hour();
+    return h && h.uvIndex ? String(h.uvIndex[0]) : "";
   }
 }
 Scratch.extensions.register(new TWCWeather());
