@@ -7,7 +7,7 @@ class TWCWeather {
   getInfo() {
     return {
       id: "TWCWeather",
-      name: "The Weather Channel",
+      name: "The Weather Chanel",
       blockIconURI: "https://weather.com/favicon.ico",
       blocks: [
         {
@@ -34,6 +34,11 @@ class TWCWeather {
           opcode: "currentVisibility",
           blockType: Scratch.BlockType.REPORTER,
           text: "Current Visibility"
+        },
+        {
+          opcode: "currentIcon",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Current Icon"
         },
         {
           opcode: "currentTemperature",
@@ -76,6 +81,11 @@ class TWCWeather {
           text: "Next Hourly Visibility"
         },
         {
+          opcode: "nextHourlyIcon",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Next Hourly Icon"
+        },
+        {
           opcode: "nextHourlyCloudCover",
           blockType: Scratch.BlockType.REPORTER,
           text: "Next Hourly Cloud Cover"
@@ -94,6 +104,11 @@ class TWCWeather {
           opcode: "dailyForecast",
           blockType: Scratch.BlockType.REPORTER,
           text: "Daily Weather Forecast"
+        },
+        {
+          opcode: "dailyFullForecast",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Daily Full Weather Forecast"
         },
         {
           opcode: "dailyTemperature",
@@ -119,6 +134,11 @@ class TWCWeather {
           opcode: "dailyPrecipChance",
           blockType: Scratch.BlockType.REPORTER,
           text: "Daily Precipitation Chance"
+        },
+        {
+          opcode: "dailyIcon",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Daily Icon"
         }
       ]
     };
@@ -140,7 +160,7 @@ class TWCWeather {
     await this._fetch(this.getRandomCoordinate(-90, 90), this.getRandomCoordinate(-180, 180));
   }
   async getRandomUSLocation() {
-    await this._fetch(this.getRandomCoordinate(24, 49), this.getRandomCoordinate(-125, -66));
+    await this._fetch(this.getRandomCoordinate(24.5, 49.5), this.getRandomCoordinate(-124.8, -66.9));
   }
   _cur() {
     return (this._data && this._data["v3-wx-observations-current"]) || null;
@@ -151,15 +171,20 @@ class TWCWeather {
   _daily() {
     return (this._data && this._data["v3-wx-forecast-daily-3day"]) || null;
   }
-  _dayIdx() {
+  _dp() {
     const d = this._daily();
-    if (!d || !d.temperature) return 0;
-    return d.temperature[0] === null ? 1 : 0;
+    if (!d || !d.daypart || !d.daypart[0]) return null;
+    return d.daypart[0];
   }
-  _dayCoverIdx() {
-    const d = this._daily();
-    if (!d || !d.cloudCover) return 0;
-    return d.cloudCover[0] === null ? 1 : 0;
+  _tempIdx() {
+    const dp = this._dp();
+    if (!dp || !dp.temperature) return 0;
+    return dp.temperature[0] === null ? 1 : 0;
+  }
+  _coverIdx() {
+    const dp = this._dp();
+    if (!dp || !dp.cloudCover) return 0;
+    return dp.cloudCover[0] === null ? 1 : 0;
   }
   currentWeather() {
     const c = this._cur();
@@ -168,6 +193,10 @@ class TWCWeather {
   currentVisibility() {
     const c = this._cur();
     return c ? String(c.visibility) + " mi" : "";
+  }
+  currentIcon() {
+    const c = this._cur();
+    return c ? String(c.iconCode) : "";
   }
   currentTemperature() {
     const c = this._cur();
@@ -195,11 +224,16 @@ class TWCWeather {
   }
   nextHourlyWindSpeed() {
     const h = this._hour();
-    return h && h.windSpeed ? String(h.windSpeed[0]) + " mph" : "";
+    if (!h || !h.windSpeed) return "";
+    return String(h.windDirectionCardinal ? h.windDirectionCardinal[0] : "") + " " + String(h.windSpeed[0]) + " mph";
   }
   nextHourlyVisibility() {
     const h = this._hour();
     return h && h.visibility ? String(h.visibility[0]) + " mi" : "";
+  }
+  nextHourlyIcon() {
+    const h = this._hour();
+    return h && h.iconCode ? String(h.iconCode[0]) : "";
   }
   nextHourlyCloudCover() {
     const h = this._hour();
@@ -216,33 +250,42 @@ class TWCWeather {
     return String(h.precipChance[0]) + "% in " + String(type ? type[0] : "");
   }
   dailyForecast() {
-    const d = this._daily();
-    return d && d.wxPhraseLong ? String(d.wxPhraseLong[this._dayIdx()]) : "";
+    const dp = this._dp();
+    return dp && dp.wxPhraseLong ? String(dp.wxPhraseLong[this._tempIdx()]) : "";
+  }
+  dailyFullForecast() {
+    const dp = this._dp();
+    return dp && dp.narrative ? String(dp.narrative[this._tempIdx()]) : "";
   }
   dailyTemperature() {
-    const d = this._daily();
-    return d && d.temperature ? String(d.temperature[this._dayIdx()]) + "°F" : "";
+    const dp = this._dp();
+    return dp && dp.temperature ? String(dp.temperature[this._tempIdx()]) + "°F" : "";
   }
   dailyWindSpeed() {
-    const d = this._daily();
-    if (!d) return "";
-    const i = this._dayIdx();
-    return String(d.windPhrase ? d.windPhrase[i] : "") + " is " + String(d.windSpeed ? d.windSpeed[i] : "") + " mph";
+    const dp = this._dp();
+    if (!dp) return "";
+    const i = this._tempIdx();
+    return String(dp.windPhrase ? dp.windPhrase[i] : "") + " is " + String(dp.windSpeed ? dp.windSpeed[i] : "") + " mph";
   }
   dailyHumidity() {
-    const d = this._daily();
-    return d && d.relativeHumidity ? String(d.relativeHumidity[this._dayIdx()]) + "%" : "";
+    const dp = this._dp();
+    return dp && dp.relativeHumidity ? String(dp.relativeHumidity[this._tempIdx()]) + "%" : "";
   }
   dailyCloudCover() {
-    const d = this._daily();
-    return d && d.cloudCover ? String(d.cloudCover[this._dayCoverIdx()]) + "%" : "";
+    const dp = this._dp();
+    return dp && dp.cloudCover ? String(dp.cloudCover[this._coverIdx()]) + "%" : "";
   }
   dailyPrecipChance() {
-    const d = this._daily();
-    if (!d || !d.precipChance) return "";
-    const i = this._dayCoverIdx();
-    const type = d.precipType !== undefined ? d.precipType : d.PrecipType;
-    return String(d.precipChance[i]) + "% is " + String(type ? type[i] : "");
+    const dp = this._dp();
+    if (!dp || !dp.precipChance) return "";
+    const i = this._coverIdx();
+    const type = dp.PrecipType !== undefined ? dp.PrecipType : dp.precipType;
+    return String(dp.precipChance[i]) + "% is " + String(type ? type[i] : "");
+  }
+  dailyIcon() {
+    const dp = this._dp();
+    if (!dp || !dp.iconCode) return "";
+    return String(dp.iconCode[this._coverIdx()]);
   }
 }
 Scratch.extensions.register(new TWCWeather());
