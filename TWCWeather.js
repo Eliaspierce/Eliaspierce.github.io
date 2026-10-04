@@ -121,6 +121,11 @@ class TWCWeather {
           text: "Daily Wind Speed"
         },
         {
+          opcode: "dailyFullWindSpeed",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "Daily Full Wind Speed"
+        },
+        {
           opcode: "dailyHumidity",
           blockType: Scratch.BlockType.REPORTER,
           text: "Daily Humidity"
@@ -306,7 +311,11 @@ class TWCWeather {
     const dp = this._dp();
     if (!dp) return "";
     const i = this._tempIdx();
-    return String(dp.windPhrase ? dp.windPhrase[i] : "") + " is " + String(dp.windSpeed ? dp.windSpeed[i] : "") + " mph";
+    return String(dp.windSpeed ? dp.windSpeed[i] : "") + " mph is " + String(dp.windDirectionCardinal ? dp.windDirectionCardinal[i] : "");
+  }
+  dailyFullWindSpeed() {
+    const dp = this._dp();
+    return dp && dp.windPhrase ? String(dp.windPhrase[this._tempIdx()]) : "";
   }
   dailyHumidity() {
     const dp = this._dp();
