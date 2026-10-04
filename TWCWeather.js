@@ -350,7 +350,7 @@ class TWCWeather {
   alertsHeadlines() {
     const a = this._alerts();
     if (!a || !a.alerts) return "";
-    return a.alerts.map(x => x.headlineText || x.eventDescription || "").filter(Boolean).join("; ");
+    return a.alerts.map(x => x.eventDescription || x.headlineText || "").filter(Boolean).join("; ");
   }
   _uvIdx() {
     const dp = this._dp();
