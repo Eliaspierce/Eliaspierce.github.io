@@ -7,7 +7,7 @@ class TWCWeather {
   getInfo() {
     return {
       id: "TWCWeather",
-      name: "The Weather Chanel",
+      name: "The Weather Channel",
       blockIconURI: "https://weather.com/favicon.ico",
       blocks: [
         {
