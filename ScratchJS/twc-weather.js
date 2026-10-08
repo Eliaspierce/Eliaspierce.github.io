@@ -15,6 +15,7 @@
  *   Hourly blocks read LIVE 2day first, CALC fallback if live fails.
  * Alert LIVE path = v3/alerts/headlines (geocode+format+language+apiKey, no units/wx)
  *   → 204 empty when no alerts; blocks report "none" / false then.
+ * Daily = daypart day/night blocks (temp, condition, precip%, forecast via PART menu).
  * Random US scope: lat 24.52–49.38, lon -124.73 to -66.95 (CONUS box, enforced
  *   by clamp: city pool excludes Anchorage/Honolulu; uniform bbox mode available).
  */
@@ -139,6 +140,38 @@
     ["Portland", "OR", 45.52, -122.68], ["Kansas City", "MO", 39.1, -94.58],
   ];
   const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  // ---- Daily daypart day/night ----
+  // TWC daypart[0] slots: [null, Tonight, Tomorrow, TomorrowNight, Friday, FridayNight, ...]
+  // day 0 has no daytime slot (use index 2 = Tomorrow as daytime estimate, 1 = Tonight).
+  function daypartIndex(dailyData, day, part) {
+    const dp = (dailyData.daypart && dailyData.daypart[0]) || {};
+    const len = ((dp.daypartName || []).length || 12) - 1;
+    const d = Math.max(0, Math.round(day));
+    const isDay = String(part).toLowerCase() !== "night";
+    const raw = d <= 0 ? (isDay ? 2 : 1) : isDay ? d * 2 : d * 2 + 1;
+    return { index: Math.max(1, Math.min(len, raw)), isDay };
+  }
+  function getDailyPart(dailyData, day, part) {
+    if (!dailyData || !dailyData.daypart || !dailyData.daypart[0]) return { ok: false, error: "need dailyData" };
+    const dp = dailyData.daypart[0];
+    const { index: i, isDay } = daypartIndex(dailyData, day, part);
+    const at = (name, fb = null) => (Array.isArray(dp[name]) && dp[name][i] !== null && dp[name][i] !== undefined ? dp[name][i] : fb);
+    return {
+      ok: true, index: i, isDay, part: isDay ? "day" : "night",
+      daypartName: at("daypartName", ""), temperature: at("temperature"), wxPhraseLong: at("wxPhraseLong", ""),
+      wxPhraseShort: at("wxPhraseShort", ""), precipChance: at("precipChance", 0), precipType: at("precipType", ""),
+      relativeHumidity: at("relativeHumidity"), windSpeed: at("windSpeed"), windDirectionCardinal: at("windDirectionCardinal", ""),
+      uvIndex: at("uvIndex", 0), uvDescription: at("uvDescription", ""), narrative: at("narrative", ""),
+    };
+  }
+  async function getDailyDaypart(lat, lon, day, part, o = {}) {
+    const r = await getDaily(lat, lon, { ...o, days: 5 });
+    if (!r.ok) return r;
+    const p = getDailyPart(r.data, day, part);
+    if (!p.ok) return p;
+    return { ok: true, status: r.status, data: p };
+  }
+
   // Random US scope: CONUS box lat 24.52–49.38, lon -124.73 to -66.95.
   const US_BBOX = { minLat: 24.52, maxLat: 49.38, minLon: -124.73, maxLon: -66.95 };
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
@@ -179,7 +212,7 @@
   const TWCWeather = {
     API_KEY: TWC_API_KEY, FORMAT: TWC_FORMAT, UNITS: TWC_UNITS, LANGUAGE: TWC_LANGUAGE, US_CITIES, US_BBOX, US_CITIES_IN_BOX,
     HOURLY_2DAY_HOURS,
-    getCurrent, getHourly2day, getHourlyLive, getHourlyCalc, calcHourlyFromData, getDaily, getAlerts, getAirQuality,
+    getCurrent, getHourly2day, getHourlyLive, getHourlyCalc, calcHourlyFromData, getDaily, getDailyPart, getDailyDaypart, daypartIndex, getAlerts, getAirQuality,
     randomUSLocation, randomUSBBox, randomLocation, getRandomUSWeather, geocode,
   };
   if (typeof globalThis !== "undefined") globalThis.TWCWeather = TWCWeather;
@@ -204,11 +237,14 @@
     getInfo() {
       const LAT = { type: Scratch.ArgumentType.NUMBER, defaultValue: 40.71 };
       const LON = { type: Scratch.ArgumentType.NUMBER, defaultValue: -74.0 };
+      const DAY = { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 };
+      const PART = { type: Scratch.ArgumentType.STRING, menu: "daynight", defaultValue: "day" };
       return {
         id: "twcWeather",
         name: "TWC Weather",
         color1: "#1E88E5",
         color2: "#1565C0",
+        menus: [{ id: "daynight", items: ["day", "night"] }],
         blocks: [
           { opcode: "currentTemp", blockType: Scratch.BlockType.REPORTER, text: "current temp at lat [LAT] lon [LON]", arguments: { LAT, LON } },
           { opcode: "currentCondition", blockType: Scratch.BlockType.REPORTER, text: "current condition at lat [LAT] lon [LON]", arguments: { LAT, LON } },
@@ -220,6 +256,10 @@
           { opcode: "dailyHigh", blockType: Scratch.BlockType.REPORTER, text: "daily high at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
           { opcode: "dailyLow", blockType: Scratch.BlockType.REPORTER, text: "daily low at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
           { opcode: "dailyNarrative", blockType: Scratch.BlockType.REPORTER, text: "daily forecast at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
+          { opcode: "dailyPartTemp", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] temp at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
+          { opcode: "dailyPartCondition", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] condition at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
+          { opcode: "dailyPartPrecip", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] precip% at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
+          { opcode: "dailyPartForecast", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] forecast at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
           { opcode: "airIndex", blockType: Scratch.BlockType.REPORTER, text: "air quality index at lat [LAT] lon [LON]", arguments: { LAT, LON } },
           { opcode: "airCategory", blockType: Scratch.BlockType.REPORTER, text: "air quality category at lat [LAT] lon [LON]", arguments: { LAT, LON } },
           { opcode: "alertHeadlines", blockType: Scratch.BlockType.REPORTER, text: "alerts v3/alerts/headlines (no wx) at lat [LAT] lon [LON]", arguments: { LAT, LON } },
@@ -311,6 +351,24 @@
         if (!r.ok) return "ERR";
         const d = Math.max(0, Math.min(r.data.narrative.length - 1, Math.round(num(args.DAY, 1))));
         return String(r.data.narrative[d] ?? "");
+      }
+
+      // ---- Daily daypart day / night (PART menu: day | night) ----
+      async dailyPartTemp(args) {
+        const r = await getDailyDaypart(num(args.LAT, 40.71), num(args.LON, -74.0), Math.round(num(args.DAY, 1)), args.PART);
+        return r.ok ? String(r.data.temperature ?? "") : "ERR";
+      }
+      async dailyPartCondition(args) {
+        const r = await getDailyDaypart(num(args.LAT, 40.71), num(args.LON, -74.0), Math.round(num(args.DAY, 1)), args.PART);
+        return r.ok ? String(r.data.wxPhraseLong || "") : "ERR";
+      }
+      async dailyPartPrecip(args) {
+        const r = await getDailyDaypart(num(args.LAT, 40.71), num(args.LON, -74.0), Math.round(num(args.DAY, 1)), args.PART);
+        return r.ok ? String(r.data.precipChance ?? 0) : "ERR";
+      }
+      async dailyPartForecast(args) {
+        const r = await getDailyDaypart(num(args.LAT, 40.71), num(args.LON, -74.0), Math.round(num(args.DAY, 1)), args.PART);
+        return r.ok ? String(r.data.narrative || "") : "ERR";
       }
 
       // ---- Air Quality ----
