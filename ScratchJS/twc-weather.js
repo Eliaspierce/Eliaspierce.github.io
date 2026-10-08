@@ -228,6 +228,8 @@
     const n = Number(v);
     return Number.isFinite(n) ? n : d;
   };
+  const BT = (Scratch.BlockType) || { REPORTER: "reporter", COMMAND: "command", BOOLEAN: "Boolean" };
+  const AT = (Scratch.ArgumentType) || { NUMBER: "number", STRING: "string" };
 
   class TWCWeatherExtension {
     constructor() {
@@ -235,10 +237,10 @@
       this._world = null; // last random world location {lat,lon}
     }
     getInfo() {
-      const LAT = { type: Scratch.ArgumentType.NUMBER, defaultValue: 40.71 };
-      const LON = { type: Scratch.ArgumentType.NUMBER, defaultValue: -74.0 };
-      const DAY = { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 };
-      const PART = { type: Scratch.ArgumentType.STRING, menu: "daynight", defaultValue: "day" };
+      const LAT = { type: AT.NUMBER, defaultValue: 40.71 };
+      const LON = { type: AT.NUMBER, defaultValue: -74.0 };
+      const DAY = { type: AT.NUMBER, defaultValue: 1 };
+      const PART = { type: AT.STRING, menu: "daynight", defaultValue: "day" };
       return {
         id: "twcWeather",
         name: "TWC Weather",
@@ -246,30 +248,30 @@
         color2: "#1565C0",
         menus: [{ id: "daynight", items: ["day", "night"] }],
         blocks: [
-          { opcode: "currentTemp", blockType: Scratch.BlockType.REPORTER, text: "current temp at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "currentCondition", blockType: Scratch.BlockType.REPORTER, text: "current condition at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "currentHumidity", blockType: Scratch.BlockType.REPORTER, text: "current humidity at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "calcHourlyTemp", blockType: Scratch.BlockType.REPORTER, text: "hourly 2day temp at lat [LAT] lon [LON] +[H]h", arguments: { LAT, LON, H: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
-          { opcode: "calcHourlyPhrase", blockType: Scratch.BlockType.REPORTER, text: "hourly 2day condition at lat [LAT] lon [LON] +[H]h", arguments: { LAT, LON, H: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
-          { opcode: "hourly2dayTemps", blockType: Scratch.BlockType.REPORTER, text: "hourly 2day temps at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "hourly2dayLive", blockType: Scratch.BlockType.REPORTER, text: "hourly v3/wx/forecast/hourly/2day live status at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "dailyHigh", blockType: Scratch.BlockType.REPORTER, text: "daily high at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
-          { opcode: "dailyLow", blockType: Scratch.BlockType.REPORTER, text: "daily low at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
-          { opcode: "dailyNarrative", blockType: Scratch.BlockType.REPORTER, text: "daily forecast at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
-          { opcode: "dailyPartTemp", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] temp at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
-          { opcode: "dailyPartCondition", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] condition at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
-          { opcode: "dailyPartPrecip", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] precip% at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
-          { opcode: "dailyPartForecast", blockType: Scratch.BlockType.REPORTER, text: "daily [PART] forecast at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
-          { opcode: "airIndex", blockType: Scratch.BlockType.REPORTER, text: "air quality index at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "airCategory", blockType: Scratch.BlockType.REPORTER, text: "air quality category at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "alertHeadlines", blockType: Scratch.BlockType.REPORTER, text: "alerts v3/alerts/headlines (no wx) at lat [LAT] lon [LON]", arguments: { LAT, LON } },
-          { opcode: "hasAlerts", blockType: Scratch.BlockType.BOOLEAN, text: "any alerts at lat [LAT] lon [LON]?", arguments: { LAT, LON } },
-          { opcode: "pickRandomUS", blockType: Scratch.BlockType.COMMAND, text: "pick random US location [24.52–49.38, -124.73–-66.95]" },
-          { opcode: "pickRandomWorld", blockType: Scratch.BlockType.COMMAND, text: "pick random location (world)" },
-          { opcode: "randomCity", blockType: Scratch.BlockType.REPORTER, text: "random city" },
-          { opcode: "randomLat", blockType: Scratch.BlockType.REPORTER, text: "random lat" },
-          { opcode: "randomLon", blockType: Scratch.BlockType.REPORTER, text: "random lon" },
-          { opcode: "randomUSSummary", blockType: Scratch.BlockType.REPORTER, text: "random US weather summary" },
+          { opcode: "currentTemp", blockType: BT.REPORTER, text: "current temp at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "currentCondition", blockType: BT.REPORTER, text: "current condition at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "currentHumidity", blockType: BT.REPORTER, text: "current humidity at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "calcHourlyTemp", blockType: BT.REPORTER, text: "hourly 2day temp at lat [LAT] lon [LON] +[H]h", arguments: { LAT, LON, H: { type: AT.NUMBER, defaultValue: 1 } } },
+          { opcode: "calcHourlyPhrase", blockType: BT.REPORTER, text: "hourly 2day condition at lat [LAT] lon [LON] +[H]h", arguments: { LAT, LON, H: { type: AT.NUMBER, defaultValue: 1 } } },
+          { opcode: "hourly2dayTemps", blockType: BT.REPORTER, text: "hourly 2day temps at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "hourly2dayLive", blockType: BT.REPORTER, text: "hourly v3/wx/forecast/hourly/2day live status at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "dailyHigh", blockType: BT.REPORTER, text: "daily high at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: AT.NUMBER, defaultValue: 1 } } },
+          { opcode: "dailyLow", blockType: BT.REPORTER, text: "daily low at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: AT.NUMBER, defaultValue: 1 } } },
+          { opcode: "dailyNarrative", blockType: BT.REPORTER, text: "daily forecast at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: AT.NUMBER, defaultValue: 1 } } },
+          { opcode: "dailyPartTemp", blockType: BT.REPORTER, text: "daily [PART] temp at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
+          { opcode: "dailyPartCondition", blockType: BT.REPORTER, text: "daily [PART] condition at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
+          { opcode: "dailyPartPrecip", blockType: BT.REPORTER, text: "daily [PART] precip% at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
+          { opcode: "dailyPartForecast", blockType: BT.REPORTER, text: "daily [PART] forecast at lat [LAT] lon [LON] day [DAY]", arguments: { PART, LAT, LON, DAY } },
+          { opcode: "airIndex", blockType: BT.REPORTER, text: "air quality index at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "airCategory", blockType: BT.REPORTER, text: "air quality category at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "alertHeadlines", blockType: BT.REPORTER, text: "alerts v3/alerts/headlines (no wx) at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "hasAlerts", blockType: BT.BOOLEAN, text: "any alerts at lat [LAT] lon [LON]?", arguments: { LAT, LON } },
+          { opcode: "pickRandomUS", blockType: BT.COMMAND, text: "pick random US location [24.52–49.38, -124.73–-66.95]" },
+          { opcode: "pickRandomWorld", blockType: BT.COMMAND, text: "pick random location (world)" },
+          { opcode: "randomCity", blockType: BT.REPORTER, text: "random city" },
+          { opcode: "randomLat", blockType: BT.REPORTER, text: "random lat" },
+          { opcode: "randomLon", blockType: BT.REPORTER, text: "random lon" },
+          { opcode: "randomUSSummary", blockType: BT.REPORTER, text: "random US weather summary" },
         ],
       };
     }
@@ -439,5 +441,20 @@
       }
   }
 
-  Scratch.extensions.register(new TWCWeatherExtension());
+  // Hardening: undefined args / network failures become "ERR"/false, never a throw.
+  const _twcExt = new TWCWeatherExtension();
+  for (const _b of _ext_blocks(_twcExt)) {
+    const _op = _b.opcode, _fn = _twcExt[_op];
+    if (typeof _fn !== "function" || String(_b.blockType).toLowerCase() === "command") continue;
+    const _isBool = String(_b.blockType).toLowerCase() === "boolean";
+    _twcExt[_op] = function (_args) {
+      try {
+        const _r = _fn.call(this, _args || {});
+        if (_r && typeof _r.then === "function") return _r.catch(() => (_isBool ? false : "ERR"));
+        return _r === undefined ? (_isBool ? false : "ERR") : _r;
+      } catch (e) { return _isBool ? false : "ERR"; }
+    };
+  }
+  function _ext_blocks(inst) { try { return inst.getInfo().blocks || []; } catch (e) { return []; } }
+  Scratch.extensions.register(_twcExt);
 })();
