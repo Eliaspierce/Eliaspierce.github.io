@@ -416,8 +416,8 @@
       pickRandomUS() { this._us = randomUSLocation(); this._world = { lat: this._us.lat, lon: this._us.lon }; }
       pickRandomWorld() { this._world = randomLocation(); this._us = { city: "", state: "", lat: this._world.lat, lon: this._world.lon }; }
       randomCity() {
-        if (!this._us) this._us = randomUSLocation();
-        return this._us.city ? `${this._us.city}, ${this._us.state}` : "random";
+        if (!this._us || !this._us.city) { this._us = randomUSLocation(); this._world = { lat: this._us.lat, lon: this._us.lon }; }
+        return `${this._us.city}, ${this._us.state}`;
       }
       randomLat() {
         if (!this._world) this.pickRandomUS();
