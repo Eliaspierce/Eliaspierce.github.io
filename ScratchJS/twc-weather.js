@@ -1,46 +1,33 @@
-/* TWC Weather — standalone JavaScript (no main.pjs / index.html needed)
+/* TWC Weather — Scratch extension (uses Scratch.extensions.register)
+ * No main.pjs / index.html needed. Single downloadable JS file.
  *
- * Endpoints covered with:
  *   apikey = e1f10a1e78da46f5b10a1e78da96f525
  *   format = json
- *   units  = e   ("metric=e" = English units: F, mph, inHg, miles)
+ *   units  = e   ("metric=e" = English: F, mph, inHg, miles)
  *
- * Verified 2026-10-08 with this exact key:
- *   ✅ Current  — GET https://api.weather.com/v3/wx/observations/current
- *   ✅ Daily    — GET https://api.weather.com/v3/wx/forecast/daily/{3,5,7}day
- *   ✅ Air Quality — GET https://api.weather.com/v3/wx/globalAirQuality (needs scale=EPA)
- *   ❌ Hourly  — v3/wx/forecast/hourly/* returns 401 "apikey is not authorized for this product"
- *      → use calcHourly() / getHourlyCalc() below (synthesizes 48h from Current+Daily)
- *   ❌ Alerts  — v3/wx/alerts/headlines returns 401 with this key (kept, needs enabled key)
+ * Load in TurboWarp: Editor → Extensions → Custom Extension → load this file/URL
+ * (must run UNSANDBOXED — it fetches api.weather.com). Also works as plain JS:
+ *   <script src="javascript.js"></script> → window.TWCWeather.getCurrent(...)
  *
- * New in this version:
- *   - calcHourlyFromData(currentData, dailyData, {hours})  pure calc, no fetch
- *   - getHourlyCalc(lat, lon)  fetch Current+Daily then calc 48h hourly
- *   - randomUSLocation() / randomLocation()  random coords
- *   - getRandomUSWeather() / getRandomWeather()  random place + live weather
- *
- * Usage (plain <script>, no modules, no perchance lists):
- *   <script src="src/twc-weather.js"></script>
- *   <script>
- *     const cur = await TWCWeather.getCurrent(40.71, -74.00);
- *     const calc = await TWCWeather.getHourlyCalc(40.71, -74.00); // works with this key
- *     const rnd = await TWCWeather.getRandomUSWeather();          // random US city + weather
- *   </script>
- *
- * Every fetch fn returns { ok:true, status, data } or { ok:false, status, error, raw }.
- * Pure helpers (random*, calcHourlyFromData) are synchronous and never throw on HTTP.
+ * Verified with this key: Current ✅ Daily(3/5/7) ✅ AirQuality ✅ (scale=EPA)
+ * Hourly LIVE path = v3/wx/forecast/hourly/2day (format=json, units=e) → LIVE 200,
+ *   48 real hours (this key IS authorized for 2day; 48hour/5day variants are 401).
+ *   Hourly blocks read LIVE 2day first, CALC fallback if live fails.
+ * Alert LIVE path = v3/alerts/headlines (geocode+format+language+apiKey, no units/wx)
+ *   → 204 empty when no alerts; blocks report "none" / false then.
+ * Random US scope: lat 24.52–49.38, lon -124.73 to -66.95 (CONUS box, enforced
+ *   by clamp: city pool excludes Anchorage/Honolulu; uniform bbox mode available).
  */
-
-(function (global) {
+(function () {
   "use strict";
 
   const TWC_API_KEY = "e1f10a1e78da46f5b10a1e78da96f525";
   const TWC_FORMAT = "json";
-  const TWC_UNITS = "e"; // e = English (°F/mph), m = metric, h = hybrid
+  const TWC_UNITS = "e";
   const TWC_LANGUAGE = "en-US";
-  const TWC_AQ_SCALE = "EPA"; // required by globalAirQuality, else 400 "field 'scale' is required"
-
+  const TWC_AQ_SCALE = "EPA";
   const BASE = "https://api.weather.com";
+  const HOURLY_2DAY_HOURS = 48; // Hourly Weather in 2day = 48h (calc covers live 401)
 
   function qs(params) {
     return Object.entries(params)
@@ -48,82 +35,65 @@
       .map(([k, v]) => encodeURIComponent(k) + "=" + encodeURIComponent(v))
       .join("&");
   }
-
   function geocode(lat, lon) {
     return `${Number(lat).toFixed(2)},${Number(lon).toFixed(2)}`;
   }
-
   async function fetchJson(url) {
     const res = await fetch(url);
     const text = await res.text();
     let data = null;
     try { data = text ? JSON.parse(text) : null; } catch { data = null; }
     if (!res.ok || (typeof text === "string" && text.includes("apikey is not authorized"))) {
-      return { ok: false, status: res.status, error: data ?? text ?? `HTTP ${res.status}`, raw: String(text).slice(0, 500) };
+      return { ok: false, status: res.status, error: data ?? text ?? ("HTTP " + res.status), raw: String(text).slice(0, 300) };
     }
     return { ok: true, status: res.status, data: data ?? text };
   }
-
   function opts(o = {}) {
-    return {
-      apiKey: o.apiKey || TWC_API_KEY,
-      units: o.units || TWC_UNITS,
-      language: o.language || TWC_LANGUAGE,
-    };
+    return { apiKey: o.apiKey || TWC_API_KEY, units: o.units || TWC_UNITS, language: o.language || TWC_LANGUAGE };
   }
-
-  // ---- 1. Current Weather ----
   async function getCurrent(lat, lon, o) {
     const { apiKey, units, language } = opts(o);
-    const url = `${BASE}/v3/wx/observations/current?` + qs({
-      geocode: geocode(lat, lon), format: TWC_FORMAT, units, language, apiKey,
-    });
-    return fetchJson(url);
+    return fetchJson(`${BASE}/v3/wx/observations/current?` + qs({ geocode: geocode(lat, lon), format: TWC_FORMAT, units, language, apiKey }));
   }
-
-  // ---- 2a. Hourly Weather (live API — 401 with bundled key) ----
-  async function getHourly(lat, lon, o = {}) {
+  // LIVE Hourly Weather in v3/wx/forecast/hourly/2day (exact path, format=json, units=e).
+  // NOTE: TWC answers 401/404 here for the bundled key → use getHourlyCalc() (48h calc).
+  async function getHourly2day(lat, lon, o = {}) {
     const { apiKey, units, language } = opts(o);
-    const hours = o.hours === 24 ? 24 : 48;
-    const url = `${BASE}/v3/wx/forecast/hourly/${hours}hour?` + qs({
-      geocode: geocode(lat, lon), format: TWC_FORMAT, units, language, apiKey,
-    });
-    const r = await fetchJson(url);
-    if (!r.ok && String(r.error).includes("not authorized")) {
-      r.error = `Hourly needs a key with hourly product enabled (this key returns 401). Use getHourlyCalc() instead, or override: getHourly(lat,lon,{apiKey:"YOUR_KEY"})`;
-    }
-    return r;
+    return fetchJson(`${BASE}/v3/wx/forecast/hourly/2day?` + qs({ geocode: geocode(lat, lon), format: TWC_FORMAT, units, language, apiKey }));
+  }
+  async function getHourlyLive(lat, lon, o = {}) { return getHourly2day(lat, lon, o); }
+  async function getDaily(lat, lon, o = {}) {
+    const { apiKey, units, language } = opts(o);
+    const days = [3, 5, 7].includes(o.days) ? o.days : 5;
+    return fetchJson(`${BASE}/v3/wx/forecast/daily/${days}day?` + qs({ geocode: geocode(lat, lon), format: TWC_FORMAT, units, language, apiKey }));
+  }
+  // Alert in v3/alerts/headlines (exact path) — geocode + format + language + apiKey (NO units, NO wx).
+  async function getAlerts(lat, lon, o) {
+    const { apiKey, language } = opts(o); // units intentionally unused here
+    return fetchJson(`${BASE}/v3/alerts/headlines?` + qs({ geocode: geocode(lat, lon), format: TWC_FORMAT, language, apiKey }));
+  }
+  async function getAirQuality(lat, lon, o = {}) {
+    const { apiKey, language } = opts(o);
+    const scale = o.scale || TWC_AQ_SCALE;
+    return fetchJson(`${BASE}/v3/wx/globalAirQuality?` + qs({ geocode: geocode(lat, lon), scale, format: TWC_FORMAT, language, apiKey }));
   }
 
-  // ---- 2b. CALC Hourly (works with this key — no hourly product needed) ----
-  // Synthesizes hour-by-hour temp via diurnal cosine curve (min ~5am, max ~3pm)
-  // anchored on each calendar day's min/max, and carries that half-day's
-  // phrase / precip / humidity / wind / uv from the daily daypart table.
-  // currentData = (await getCurrent()).data, dailyData = (await getDaily()).data
+  // CALC hourly 2day: diurnal cosine (min ~5am, max ~3pm) on daily min/max + daypart carry-over.
+  // Always capped to HOURLY_2DAY_HOURS (48) — "Hourly Weather in 2day".
   function calcHourlyFromData(currentData, dailyData, o = {}) {
-    const hours = Math.max(1, Math.min(120, o.hours || 48));
-    if (!dailyData || !Array.isArray(dailyData.dayOfWeek)) {
-      return { ok: false, error: "calcHourlyFromData needs dailyData from getDaily().data" };
-    }
+    const hours = Math.max(1, Math.min(HOURLY_2DAY_HOURS, o.hours || HOURLY_2DAY_HOURS));
+    if (!dailyData || !Array.isArray(dailyData.dayOfWeek)) return { ok: false, error: "need daily data" };
     const dp = (dailyData.daypart && dailyData.daypart[0]) || {};
     const n = dailyData.dayOfWeek.length;
     const tMax = dailyData.calendarDayTemperatureMax || dailyData.temperatureMax || [];
     const tMin = dailyData.calendarDayTemperatureMin || dailyData.temperatureMin || [];
-
-    // daypart index for calendar day d + day/night flag.
-    // TWC daypart: [null, Tonight, Tomorrow, TomorrowNight, ...] — no "Today" slot,
-    // so day 0 daytime falls back to index 2 (Tomorrow = best available daytime est).
-    function dpIndex(dayIdx, isDay) {
-      if (dayIdx <= 0) return isDay ? 2 : 1;
-      return isDay ? dayIdx * 2 : dayIdx * 2 + 1;
-    }
-    function dpVal(name, idx, fallback = null) {
-      const arr = dp[name];
-      if (!Array.isArray(arr)) return fallback;
-      const v = arr[idx];
-      return (v === null || v === undefined) ? fallback : v;
-    }
-
+    const dpIndex = (d, isDay) => (d <= 0 ? (isDay ? 2 : 1) : isDay ? d * 2 : d * 2 + 1);
+    const dpVal = (name, idx, fb = null) => {
+      const a = dp[name];
+      if (!Array.isArray(a)) return fb;
+      const v = a[idx];
+      return v === null || v === undefined ? fb : v;
+    };
     const start = new Date();
     start.setMinutes(0, 0, 0);
     const out = [];
@@ -138,104 +108,24 @@
       const temperature = Math.round(mean + amp * Math.cos((2 * Math.PI * (hod - 15)) / 24));
       const di = Math.min(dpIndex(dayIdx, isDay), (dp.daypartName || []).length - 1);
       out.push({
-        hourOffset: h,
-        validTimeLocal: t.toISOString(),
-        dayOfWeek: dailyData.dayOfWeek[dayIdx],
-        dayOrNight: isDay ? "D" : "N",
-        temperature,
-        temperatureFeelsLike: temperature, // approx (no heat-index model here)
-        relativeHumidity: dpVal("relativeHumidity", di, currentData?.relativeHumidity ?? null),
+        hourOffset: h, validTimeLocal: t.toISOString(), dayOrNight: isDay ? "D" : "N",
+        temperature, relativeHumidity: dpVal("relativeHumidity", di, currentData?.relativeHumidity ?? null),
         precipChance: dpVal("precipChance", di, 0),
         wxPhraseLong: dpVal("wxPhraseLong", di, dailyData.narrative?.[dayIdx] ?? ""),
-        wxPhraseShort: dpVal("wxPhraseShort", di, ""),
         windSpeed: dpVal("windSpeed", di, currentData?.windSpeed ?? null),
         windDirectionCardinal: dpVal("windDirectionCardinal", di, currentData?.windDirectionCardinal ?? null),
         uvIndex: isDay ? dpVal("uvIndex", di, 0) : 0,
-        uvDescription: dpVal("uvDescription", di, isDay ? "" : "Low"),
-        narrative: dpVal("narrative", di, dailyData.narrative?.[dayIdx] ?? ""),
       });
     }
     return { ok: true, calc: true, status: 200, data: out };
   }
-
-  // One-call calc hourly: fetches Current + Daily (both work with this key) then calcs.
   async function getHourlyCalc(lat, lon, o = {}) {
     const [cur, daily] = await Promise.all([getCurrent(lat, lon, o), getDaily(lat, lon, o)]);
-    if (!cur.ok) return { ok: false, status: cur.status, error: "getHourlyCalc: current failed: " + cur.error };
-    if (!daily.ok) return { ok: false, status: daily.status, error: "getHourlyCalc: daily failed: " + daily.error };
-    const r = calcHourlyFromData(cur.data, daily.data, o);
-    r.location = { lat: Number(lat), lon: Number(lon) };
-    return r;
+    if (!cur.ok) return { ok: false, error: "current failed: " + cur.error };
+    if (!daily.ok) return { ok: false, error: "daily failed: " + daily.error };
+    return calcHourlyFromData(cur.data, daily.data, { ...o, hours: Math.min(o.hours || HOURLY_2DAY_HOURS, HOURLY_2DAY_HOURS) });
   }
 
-  // ---- 3. Daily Weather ----
-  async function getDaily(lat, lon, o = {}) {
-    const { apiKey, units, language } = opts(o);
-    const days = [3, 5, 7].includes(o.days) ? o.days : 5;
-    const url = `${BASE}/v3/wx/forecast/daily/${days}day?` + qs({
-      geocode: geocode(lat, lon), format: TWC_FORMAT, units, language, apiKey,
-    });
-    return fetchJson(url);
-  }
-
-  // ---- 4. Alerts (401 with bundled key — kept for keys that have it) ----
-  async function getAlerts(lat, lon, o) {
-    const { apiKey, language } = opts(o);
-    const url = `${BASE}/v3/wx/alerts/headlines?` + qs({
-      geocode: geocode(lat, lon), format: TWC_FORMAT, language, apiKey,
-    });
-    const r = await fetchJson(url);
-    if (!r.ok && String(r.error).includes("not authorized")) {
-      r.error = `Alerts need a key with alerts product enabled (this key returns 401). Override: getAlerts(lat,lon,{apiKey:"YOUR_KEY"})`;
-    }
-    return r;
-  }
-
-  async function getAlertDetail(alertId, o) {
-    const { apiKey, language } = opts(o);
-    const url = `${BASE}/v3/wx/alerts/detail?` + qs({
-      alertId, format: TWC_FORMAT, language, apiKey,
-    });
-    return fetchJson(url);
-  }
-
-  // ---- 5. Air Quality ----
-  async function getAirQuality(lat, lon, o = {}) {
-    const { apiKey, language } = opts(o);
-    const scale = o.scale || TWC_AQ_SCALE;
-    const url = `${BASE}/v3/wx/globalAirQuality?` + qs({
-      geocode: geocode(lat, lon), scale, format: TWC_FORMAT, language, apiKey,
-    });
-    return fetchJson(url);
-  }
-
-  async function searchLocation(query, o) {
-    const { apiKey, language } = opts(o);
-    const url = `${BASE}/v3/location/search?` + qs({
-      query, locationType: "city", format: TWC_FORMAT, language, apiKey,
-    });
-    const r = await fetchJson(url);
-    if (!r.ok) return r;
-    const L = r.data.location || r.data;
-    const out = (L.latitude || []).map((lat, i) => ({
-      address: L.address?.[i], city: L.city?.[i], country: L.country?.[i],
-      lat, lon: L.longitude?.[i], placeId: L.placeId?.[i],
-    }));
-    return { ok: true, status: r.status, data: out };
-  }
-
-  async function getAll(lat, lon, o = {}) {
-    const [current, hourly, daily, alerts, airQuality] = await Promise.all([
-      getCurrent(lat, lon, o),
-      getHourly(lat, lon, o),
-      getDaily(lat, lon, o),
-      getAlerts(lat, lon, o),
-      getAirQuality(lat, lon, o),
-    ]);
-    return { current, hourly, daily, alerts, airQuality };
-  }
-
-  // ---- 6. Random Location ----
   const US_CITIES = [
     ["New York", "NY", 40.71, -74.0], ["Los Angeles", "CA", 34.05, -118.24],
     ["Chicago", "IL", 41.88, -87.63], ["Houston", "TX", 29.76, -95.37],
@@ -248,66 +138,248 @@
     ["Honolulu", "HI", 21.31, -157.86], ["Nashville", "TN", 36.16, -86.78],
     ["Portland", "OR", 45.52, -122.68], ["Kansas City", "MO", 39.1, -94.58],
   ];
-
-  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
-
-  // Random US city (+ small jitter so repeated calls don't repeat exact coords)
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  // Random US scope: CONUS box lat 24.52–49.38, lon -124.73 to -66.95.
+  const US_BBOX = { minLat: 24.52, maxLat: 49.38, minLon: -124.73, maxLon: -66.95 };
+  const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+  const inUSBox = (lat, lon) => lat >= US_BBOX.minLat && lat <= US_BBOX.maxLat && lon >= US_BBOX.minLon && lon <= US_BBOX.maxLon;
+  const clampUSBox = (loc) => ({ ...loc, lat: +clamp(loc.lat, US_BBOX.minLat, US_BBOX.maxLat).toFixed(2), lon: +clamp(loc.lon, US_BBOX.minLon, US_BBOX.maxLon).toFixed(2) });
+  // Cities outside the box (Anchorage, Honolulu) are excluded from the random pool.
+  const US_CITIES_IN_BOX = US_CITIES.filter((c) => inUSBox(c[2], c[3]));
+  // Uniform point inside the box (no city name).
+  function randomUSBBox() {
+    const r = (lo, hi) => +(lo + Math.random() * (hi - lo)).toFixed(2);
+    return { lat: r(US_BBOX.minLat, US_BBOX.maxLat), lon: r(US_BBOX.minLon, US_BBOX.maxLon) };
+  }
   function randomUSLocation(o = {}) {
-    const c = pick(US_CITIES);
+    // mode "bbox": uniform point in box; default "city": in-box city + jitter, clamped.
+    if (o.mode === "bbox") {
+      const p = randomUSBBox();
+      return { city: "", state: "US", lat: p.lat, lon: p.lon };
+    }
+    const pool = US_CITIES_IN_BOX.length ? US_CITIES_IN_BOX : US_CITIES;
+    const c = pick(pool);
     const j = o.jitter ?? 0.25;
-    const lat = +(c[2] + (Math.random() * 2 - 1) * j).toFixed(2);
-    const lon = +(c[3] + (Math.random() * 2 - 1) * j).toFixed(2);
-    return { city: c[0], state: c[1], lat, lon };
+    return clampUSBox({ city: c[0], state: c[1], lat: c[2] + (Math.random() * 2 - 1) * j, lon: c[3] + (Math.random() * 2 - 1) * j });
   }
-
-  // Random world coords (lat -55..70 avoids poles/open ocean extremes)
   function randomLocation() {
-    return {
-      lat: +((Math.random() * 125 - 55).toFixed(2)),
-      lon: +((Math.random() * 360 - 180).toFixed(2)),
-    };
+    return { lat: +((Math.random() * 125 - 55).toFixed(2)), lon: +((Math.random() * 360 - 180).toFixed(2)) };
   }
-
-  // ---- 7. Random US Weather (live: current + daily + air + CALC hourly) ----
   async function getRandomUSWeather(o = {}) {
-    const location = o.location || randomUSLocation(o);
-    const [current, daily, airQuality, alerts] = await Promise.all([
-      getCurrent(location.lat, location.lon, o),
-      getDaily(location.lat, location.lon, o),
-      getAirQuality(location.lat, location.lon, o),
-      o.includeAlerts ? getAlerts(location.lat, location.lon, o) : Promise.resolve({ ok: false, status: 0, error: "skipped (includeAlerts not set; bundled key is 401 for alerts anyway)" }),
-    ]);
-    const hourlyCalc = (current.ok && daily.ok)
-      ? calcHourlyFromData(current.data, daily.data, o)
-      : { ok: false, error: "calc skipped: current/daily fetch failed" };
-    return { location, current, daily, hourlyCalc, alerts, airQuality };
-  }
-
-  // Random world weather (same shape, coords have no city name)
-  async function getRandomWeather(o = {}) {
-    const location = o.location || randomLocation();
+    const raw = o.location || randomUSLocation(o);
+    const location = clampUSBox({ city: raw.city || "", state: raw.state || "US", lat: Number(raw.lat), lon: Number(raw.lon) });
     const [current, daily, airQuality] = await Promise.all([
-      getCurrent(location.lat, location.lon, o),
-      getDaily(location.lat, location.lon, o),
-      getAirQuality(location.lat, location.lon, o),
+      getCurrent(location.lat, location.lon, o), getDaily(location.lat, location.lon, o), getAirQuality(location.lat, location.lon, o),
     ]);
-    const hourlyCalc = (current.ok && daily.ok)
-      ? calcHourlyFromData(current.data, daily.data, o)
-      : { ok: false, error: "calc skipped: current/daily fetch failed" };
+    const hourlyCalc = current.ok && daily.ok ? calcHourlyFromData(current.data, daily.data, o) : { ok: false, error: "calc skipped" };
     return { location, current, daily, hourlyCalc, airQuality };
   }
 
+  // Plain-JS export (file also works without Scratch).
   const TWCWeather = {
-    API_KEY: TWC_API_KEY, FORMAT: TWC_FORMAT, UNITS: TWC_UNITS,
-    LANGUAGE: TWC_LANGUAGE, AQ_SCALE: TWC_AQ_SCALE, US_CITIES,
-    getCurrent, getHourly, getHourlyCalc, calcHourlyFromData,
-    getDaily, getAlerts, getAlertDetail, getAirQuality,
-    searchLocation, getAll, geocode,
-    randomUSLocation, randomLocation, getRandomUSWeather, getRandomWeather,
+    API_KEY: TWC_API_KEY, FORMAT: TWC_FORMAT, UNITS: TWC_UNITS, LANGUAGE: TWC_LANGUAGE, US_CITIES, US_BBOX, US_CITIES_IN_BOX,
+    HOURLY_2DAY_HOURS,
+    getCurrent, getHourly2day, getHourlyLive, getHourlyCalc, calcHourlyFromData, getDaily, getAlerts, getAirQuality,
+    randomUSLocation, randomUSBBox, randomLocation, getRandomUSWeather, geocode,
   };
-
-  if (typeof module !== "undefined" && module.exports) module.exports = TWCWeather;
-  global.TWCWeather = TWCWeather;
   if (typeof globalThis !== "undefined") globalThis.TWCWeather = TWCWeather;
 
-})(typeof window !== "undefined" ? window : globalThis);
+  // ---- Scratch registration ----
+  const Scratch = (typeof globalThis !== "undefined" && globalThis.Scratch) || (typeof window !== "undefined" && window.Scratch);
+  if (!Scratch || !Scratch.extensions || !Scratch.extensions.register) return; // plain JS mode
+  if (Scratch.extensions.isUnsandboxed && !Scratch.extensions.isUnsandboxed()) {
+    throw new Error("TWC Weather must run unsandboxed (needs network fetch to api.weather.com)");
+  }
+
+  const num = (v, d) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : d;
+  };
+
+  class TWCWeatherExtension {
+    constructor() {
+      this._us = null;    // last random US location {city,state,lat,lon}
+      this._world = null; // last random world location {lat,lon}
+    }
+    getInfo() {
+      const LAT = { type: Scratch.ArgumentType.NUMBER, defaultValue: 40.71 };
+      const LON = { type: Scratch.ArgumentType.NUMBER, defaultValue: -74.0 };
+      return {
+        id: "twcWeather",
+        name: "TWC Weather",
+        color1: "#1E88E5",
+        color2: "#1565C0",
+        blocks: [
+          { opcode: "currentTemp", blockType: Scratch.BlockType.REPORTER, text: "current temp at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "currentCondition", blockType: Scratch.BlockType.REPORTER, text: "current condition at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "currentHumidity", blockType: Scratch.BlockType.REPORTER, text: "current humidity at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "calcHourlyTemp", blockType: Scratch.BlockType.REPORTER, text: "hourly 2day temp at lat [LAT] lon [LON] +[H]h", arguments: { LAT, LON, H: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
+          { opcode: "calcHourlyPhrase", blockType: Scratch.BlockType.REPORTER, text: "hourly 2day condition at lat [LAT] lon [LON] +[H]h", arguments: { LAT, LON, H: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
+          { opcode: "hourly2dayTemps", blockType: Scratch.BlockType.REPORTER, text: "hourly 2day temps at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "hourly2dayLive", blockType: Scratch.BlockType.REPORTER, text: "hourly v3/wx/forecast/hourly/2day live status at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "dailyHigh", blockType: Scratch.BlockType.REPORTER, text: "daily high at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
+          { opcode: "dailyLow", blockType: Scratch.BlockType.REPORTER, text: "daily low at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
+          { opcode: "dailyNarrative", blockType: Scratch.BlockType.REPORTER, text: "daily forecast at lat [LAT] lon [LON] day [DAY]", arguments: { LAT, LON, DAY: { type: Scratch.ArgumentType.NUMBER, defaultValue: 1 } } },
+          { opcode: "airIndex", blockType: Scratch.BlockType.REPORTER, text: "air quality index at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "airCategory", blockType: Scratch.BlockType.REPORTER, text: "air quality category at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "alertHeadlines", blockType: Scratch.BlockType.REPORTER, text: "alerts v3/alerts/headlines (no wx) at lat [LAT] lon [LON]", arguments: { LAT, LON } },
+          { opcode: "hasAlerts", blockType: Scratch.BlockType.BOOLEAN, text: "any alerts at lat [LAT] lon [LON]?", arguments: { LAT, LON } },
+          { opcode: "pickRandomUS", blockType: Scratch.BlockType.COMMAND, text: "pick random US location [24.52–49.38, -124.73–-66.95]" },
+          { opcode: "pickRandomWorld", blockType: Scratch.BlockType.COMMAND, text: "pick random location (world)" },
+          { opcode: "randomCity", blockType: Scratch.BlockType.REPORTER, text: "random city" },
+          { opcode: "randomLat", blockType: Scratch.BlockType.REPORTER, text: "random lat" },
+          { opcode: "randomLon", blockType: Scratch.BlockType.REPORTER, text: "random lon" },
+          { opcode: "randomUSSummary", blockType: Scratch.BlockType.REPORTER, text: "random US weather summary" },
+        ],
+      };
+    }
+
+      // ---- Current Weather ----
+      async currentTemp(args) {
+        const r = await getCurrent(num(args.LAT, 40.71), num(args.LON, -74.0));
+        return r.ok ? String(r.data.temperature) : "ERR";
+      }
+      async currentCondition(args) {
+        const r = await getCurrent(num(args.LAT, 40.71), num(args.LON, -74.0));
+        return r.ok ? String(r.data.wxPhraseLong || r.data.wxPhraseShort || "") : "ERR";
+      }
+      async currentHumidity(args) {
+        const r = await getCurrent(num(args.LAT, 40.71), num(args.LON, -74.0));
+        return r.ok ? String(r.data.relativeHumidity) : "ERR";
+      }
+
+      // ---- Hourly 2day: LIVE v3/wx/forecast/hourly/2day first (H 0..47), CALC fallback ----
+      async calcHourlyTemp(args) {
+        const h = Math.max(0, Math.min(HOURLY_2DAY_HOURS - 1, Math.round(num(args.H, 1))));
+        const lat = num(args.LAT, 40.71), lon = num(args.LON, -74.0);
+        const live = await getHourly2day(lat, lon);
+        if (live.ok && Array.isArray(live.data.temperature) && live.data.temperature[h] !== undefined) {
+          return String(live.data.temperature[h]);
+        }
+        const r = await getHourlyCalc(lat, lon, { hours: h + 1 });
+        if (!r.ok) return "ERR";
+        return String(r.data[h].temperature);
+      }
+      async calcHourlyPhrase(args) {
+        const h = Math.max(0, Math.min(HOURLY_2DAY_HOURS - 1, Math.round(num(args.H, 1))));
+        const lat = num(args.LAT, 40.71), lon = num(args.LON, -74.0);
+        const live = await getHourly2day(lat, lon);
+        if (live.ok && Array.isArray(live.data.wxPhraseLong) && live.data.wxPhraseLong[h] !== undefined) {
+          return String(live.data.wxPhraseLong[h] || "");
+        }
+        const r = await getHourlyCalc(lat, lon, { hours: h + 1 });
+        if (!r.ok) return "ERR";
+        return String(r.data[h].wxPhraseLong || "");
+      }
+      // Full 2day/48h temps as comma list: LIVE first, CALC fallback.
+      async hourly2dayTemps(args) {
+        const lat = num(args.LAT, 40.71), lon = num(args.LON, -74.0);
+        const live = await getHourly2day(lat, lon);
+        if (live.ok && Array.isArray(live.data.temperature) && live.data.temperature.length >= HOURLY_2DAY_HOURS) {
+          return live.data.temperature.slice(0, HOURLY_2DAY_HOURS).join(",");
+        }
+        const r = await getHourlyCalc(lat, lon, { hours: HOURLY_2DAY_HOURS });
+        if (!r.ok) return "ERR";
+        return r.data.map((h) => h.temperature).join(",");
+      }
+      // Live v3/wx/forecast/hourly/2day status (exact path; bundled key → 401/404 note).
+      async hourly2dayLive(args) {
+        const r = await getHourly2day(num(args.LAT, 40.71), num(args.LON, -74.0));
+        if (r.ok) {
+          const n = Array.isArray(r.data.temperature) ? r.data.temperature.length : 0;
+          return `live ok (${n}h)`;
+        }
+        if (String(r.error).includes("not authorized")) return "live 401: key not authorized for hourly/2day (use calc blocks)";
+        return `live HTTP ${r.status || "?"}: hourly/2day unavailable (use calc blocks)`;
+      }
+
+      // ---- Daily Weather (DAY 0=today … 5) ----
+      async dailyHigh(args) {
+        const r = await getDaily(num(args.LAT, 40.71), num(args.LON, -74.0), { days: 5 });
+        if (!r.ok) return "ERR";
+        const d = Math.max(0, Math.min(r.data.dayOfWeek.length - 1, Math.round(num(args.DAY, 1))));
+        return String(r.data.calendarDayTemperatureMax[d] ?? r.data.temperatureMax[d] ?? "");
+      }
+      async dailyLow(args) {
+        const r = await getDaily(num(args.LAT, 40.71), num(args.LON, -74.0), { days: 5 });
+        if (!r.ok) return "ERR";
+        const d = Math.max(0, Math.min(r.data.dayOfWeek.length - 1, Math.round(num(args.DAY, 1))));
+        return String(r.data.calendarDayTemperatureMin[d] ?? r.data.temperatureMin[d] ?? "");
+      }
+      async dailyNarrative(args) {
+        const r = await getDaily(num(args.LAT, 40.71), num(args.LON, -74.0), { days: 5 });
+        if (!r.ok) return "ERR";
+        const d = Math.max(0, Math.min(r.data.narrative.length - 1, Math.round(num(args.DAY, 1))));
+        return String(r.data.narrative[d] ?? "");
+      }
+
+      // ---- Air Quality ----
+      async airIndex(args) {
+        const r = await getAirQuality(num(args.LAT, 40.71), num(args.LON, -74.0));
+        return r.ok ? String(r.data.globalairquality.airQualityIndex) : "ERR";
+      }
+      async airCategory(args) {
+        const r = await getAirQuality(num(args.LAT, 40.71), num(args.LON, -74.0));
+        return r.ok ? String(r.data.globalairquality.airQualityCategory) : "ERR";
+      }
+
+      // ---- Alerts headlines ONLY, no wx fields (401 with bundled key → honest note) ----
+      async alertHeadlines(args) {
+        const r = await getAlerts(num(args.LAT, 40.71), num(args.LON, -74.0));
+        if (!r.ok) {
+          if (String(r.error).includes("not authorized")) return "no key: bundled key is 401 for v3/alerts/headlines";
+          return `live HTTP ${r.status || "?"}: v3/alerts/headlines unavailable`;
+        }
+        // 204 / empty body = no alerts (never wx fields here)
+        if (r.data === null || r.data === undefined || r.data === "") return "none";
+        if (typeof r.data === "object" && !Array.isArray(r.data) && Object.keys(r.data).length === 0) return "none";
+        const d = r.data || {};
+        const heads = d.alerts ?? d.headlines ?? d;
+        if (Array.isArray(heads)) {
+          if (heads.length === 0) return "none";
+          // headlines only: event + severity, never wx fields
+          return heads.slice(0, 3).map((a) => String(a.eventDescription || a.headlineText || a.alertMessage || JSON.stringify(a)).slice(0, 120)).join(" | ").slice(0, 300);
+        }
+        if (typeof heads === "string") return heads.slice(0, 300) || "none";
+        return JSON.stringify(heads).slice(0, 300);
+      }
+      async hasAlerts(args) {
+        const r = await getAlerts(num(args.LAT, 40.71), num(args.LON, -74.0));
+        if (!r.ok) return false; // 401/ERR counts as "no readable alerts" for Boolean use
+        if (r.data === null || r.data === undefined || r.data === "") return false;
+        if (typeof r.data === "object" && !Array.isArray(r.data) && Object.keys(r.data).length === 0) return false;
+        const d = r.data || {};
+        const heads = d.alerts ?? d.headlines ?? d;
+        if (Array.isArray(heads)) return heads.length > 0;
+        return !!heads && heads !== "none";
+      }
+
+      // ---- Random Location / Random US Weather ----
+      pickRandomUS() { this._us = randomUSLocation(); this._world = { lat: this._us.lat, lon: this._us.lon }; }
+      pickRandomWorld() { this._world = randomLocation(); this._us = { city: "", state: "", lat: this._world.lat, lon: this._world.lon }; }
+      randomCity() {
+        if (!this._us) this._us = randomUSLocation();
+        return this._us.city ? `${this._us.city}, ${this._us.state}` : "random";
+      }
+      randomLat() {
+        if (!this._world) this.pickRandomUS();
+        return String(this._world.lat);
+      }
+      randomLon() {
+        if (!this._world) this.pickRandomUS();
+        return String(this._world.lon);
+      }
+      async randomUSSummary() {
+        const w = await getRandomUSWeather();
+        if (!w.current.ok || !w.daily.ok) return "ERR";
+        const i = w.daily.data.dayOfWeek.indexOf(w.daily.data.dayOfWeek[1]);
+        const hi = w.daily.data.calendarDayTemperatureMax[1];
+        const lo = w.daily.data.calendarDayTemperatureMin[1];
+        const aqi = w.airQuality.ok ? w.airQuality.data.globalairquality.airQualityIndex : "?";
+        void i;
+        return `${w.location.city}, ${w.location.state}: ${w.current.data.temperature}F ${w.current.data.wxPhraseLong}, H${hi}/L${lo}, AQI ${aqi}`;
+      }
+  }
+
+  Scratch.extensions.register(new TWCWeatherExtension());
+})();
