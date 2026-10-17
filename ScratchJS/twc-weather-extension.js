@@ -126,12 +126,15 @@
               { text: 'precip chance %', value: 'precipChance' },
               { text: 'precip type', value: 'precipType' },
               { text: 'wind speed mph', value: 'windSpeed' },
+              { text: 'wind gust mph', value: 'windGust' },
               { text: 'wind direction', value: 'windDir' },
               { text: 'uv index', value: 'uvIndex' },
               { text: 'uv description', value: 'uvDesc' },
               { text: 'cloud cover %', value: 'cloudCover' },
               { text: 'day or night', value: 'dayOrNight' },
-              { text: 'local time', value: 'timeLocal' }
+              { text: 'local time', value: 'timeLocal' },
+              { text: 'visibility mi', value: 'visibility' },
+              { text: 'icon code', value: 'iconCode' }
             ]
           },
           dailyField: {
@@ -156,6 +159,7 @@
               { text: 'precip type', value: 'precipType' },
               { text: 'humidity %', value: 'humidity' },
               { text: 'wind speed mph', value: 'windSpeed' },
+              { text: 'wind gust mph', value: 'windGust' },
               { text: 'wind direction', value: 'windDir' },
               { text: 'wind phrase', value: 'windPhrase' },
               { text: 'uv index', value: 'uvIndex' },
@@ -163,7 +167,8 @@
               { text: 'cloud cover %', value: 'cloudCover' },
               { text: 'daypart name', value: 'daypartName' },
               { text: 'thunder', value: 'thunder' },
-              { text: 'qualifier', value: 'qualifier' }
+              { text: 'qualifier', value: 'qualifier' },
+              { text: 'icon code', value: 'iconCode' }
             ]
           },
           dayNight: {
@@ -436,12 +441,15 @@
           case 'precipChance': return num(at(d.precipChance));
           case 'precipType': return str(at(d.precipType));
           case 'windSpeed': return num(at(d.windSpeed));
+          case 'windGust': return num(at(d.windGust));
           case 'windDir': return str(at(d.windDirectionCardinal));
           case 'uvIndex': return num(at(d.uvIndex));
           case 'uvDesc': return str(at(d.uvDescription));
           case 'cloudCover': return num(at(d.cloudCover));
           case 'dayOrNight': return str(at(d.dayOrNight));
           case 'timeLocal': return str(at(d.validTimeLocal));
+          case 'visibility': return num(at(d.visibility));
+          case 'iconCode': return num(at(d.iconCode));
           default: return '';
         }
       } catch (e) { return ''; }
@@ -510,6 +518,7 @@
           case 'precipType': return str(at(p.precipType));
           case 'humidity': return num(at(p.relativeHumidity));
           case 'windSpeed': return num(at(p.windSpeed));
+          case 'windGust': return num(at(p.windGust));
           case 'windDir': return str(at(p.windDirectionCardinal));
           case 'windPhrase': return str(at(p.windPhrase));
           case 'uvIndex': return num(at(p.uvIndex));
@@ -518,6 +527,7 @@
           case 'daypartName': return str(at(p.daypartName));
           case 'thunder': return str(at(p.thunderCategory));
           case 'qualifier': return str(at(p.qualifierPhrase));
+          case 'iconCode': return num(at(p.iconCode));
           default: return '';
         }
       } catch (e) { return ''; }
