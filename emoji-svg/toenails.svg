@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <!-- Background Foot Structure -->
+  <path d="M45,85 C25,85 20,70 20,50 C20,30 30,15 50,15 C65,15 70,25 75,40 C80,55 75,70 65,80 C58,85 52,85 45,85 Z" fill="#FFE0BD" />
+  
+  <!-- Big Toe -->
+  <path d="M50,15 C45,5 30,5 25,15 C20,25 25,35 35,35 C45,35 52,25 50,15 Z" fill="#FFE0BD" stroke="#F0C294" stroke-width="1.5" />
+  
+  <!-- Big Toenail -->
+  <path d="M44,14 C41,8 32,8 29,14 C27,18 31,23 36,23 C41,23 45,19 44,14 Z" fill="#FFF5EB" stroke="#E0B080" stroke-width="1" />
+  <!-- Toenail Gloss/Highlight -->
+  <path d="M41,12 C40,10 36,10 34,12" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round" />
+
+  <!-- Second Toe -->
+  <circle cx="56" cy="22" r="7" fill="#FFE0BD" stroke="#F0C294" stroke-width="1.5" />
+  <circle cx="56" cy="20" r="4" fill="#FFF5EB" />
+
+  <!-- Third Toe -->
+  <circle cx="67" cy="29" r="6.5" fill="#FFE0BD" stroke="#F0C294" stroke-width="1.5" />
+  <circle cx="67" cy="27" r="3.5" fill="#FFF5EB" />
+
+  <!-- Fourth Toe -->
+  <circle cx="75" cy="39" r="6" fill="#FFE0BD" stroke="#F0C294" stroke-width="1.5" />
+  <circle cx="75" cy="37" r="3" fill="#FFF5EB" />
+
+  <!-- Little Toe -->
+  <circle cx="80" cy="50" r="5.5" fill="#FFE0BD" stroke="#F0C294" stroke-width="1.5" />
+  <circle cx="80" cy="48" r="2.5" fill="#FFF5EB" />
+</svg>
