@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#2a2e3d"/>
+      <stop offset="100%" stop-color="#151821"/>
+    </radialGradient>
+
+    <!-- Metallic Camera Body Gradient -->
+    <linearGradient id="metal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f2f5"/>
+      <stop offset="30%" stop-color="#9ea7b3"/>
+      <stop offset="70%" stop-color="#515a6b"/>
+      <stop offset="100%" stop-color="#282e38"/>
+    </linearGradient>
+
+    <!-- Lens Outer Ring Gradient -->
+    <radialGradient id="lens-ring" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="#434955"/>
+      <stop offset="95%" stop-color="#8c96a6"/>
+      <stop offset="100%" stop-color="#20232a"/>
+    </radialGradient>
+
+    <!-- Lens Glass Deep Gradient -->
+    <radialGradient id="lens-glass" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1a3d54"/>
+      <stop offset="50%" stop-color="#0b1d28"/>
+      <stop offset="100%" stop-color="#020508"/>
+    </radialGradient>
+
+    <!-- Toenail/Skin Tone Gradient -->
+    <linearGradient id="skin-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#e8b499"/>
+      <stop offset="60%" stop-color="#f5cdb8"/>
+      <stop offset="100%" stop-color="#fce3d7"/>
+    </linearGradient>
+
+    <!-- Toenail Plate Gradient -->
+    <linearGradient id="nail-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ebbdc0"/>
+      <stop offset="75%" stop-color="#f3d2d4"/>
+      <stop offset="90%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e0dede"/>
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    
+    <filter id="inner-shadow">
+      <feComponentTransfer in="SourceAlpha">
+        <feFuncA type="linear" slope="1"/>
+      </feComponentTransfer>
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feOffset dx="0" dy="5"/>
+      <feComposite operator="out" in2="SourceGraphic"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0"/>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)"/>
+
+  <!-- Main Concept Container with Shadow -->
+  <g filter="url(#shadow)">
+    
+    <!-- CAMERA BODY (The "Toe" Shape Hybrid) -->
+    <!-- Base plate / casing -->
+    <path d="M 220,180 
+             C 220,150 250,120 290,120 
+             L 510,120 
+             C 550,120 580,150 580,180 
+             L 580,420 
+             C 580,470 530,500 470,500 
+             L 330,500 
+             C 270,500 220,470 220,420 
+             Z" 
+          fill="url(#metal-grad)" stroke="#1c2026" stroke-width="6" stroke-linejoin="round"/>
+
+    <!-- Camera Top Elements (Shutter button & Dial) -->
+    <!-- Shutter Button -->
+    <path d="M 260,120 L 260,100 C 260,95 285,95 285,100 L 285,120 Z" fill="#6b7585" stroke="#1c2026" stroke-width="4"/>
+    <!-- Mode Dial -->
+    <path d="M 490,120 L 490,105 C 490,102 530,102 530,105 L 530,120 Z" fill="#434955" stroke="#1c2026" stroke-width="4"/>
+    <line x1="500" y1="112" x2="500" y2="120" stroke="#1c2026" stroke-width="2"/>
+    <line x1="510" y1="112" x2="510" y2="120" stroke="#1c2026" stroke-width="2"/>
+    <line x1="520" y1="112" x2="520" y2="120" stroke="#1c2026" stroke-width="2"/>
+
+    <!-- Camera Flash Window -->
+    <rect x="470" y="150" width="60" height="30" rx="5" fill="#e3f2fd" stroke="#1c2026" stroke-width="4"/>
+    <polygon points="475,165 500,155 495,168 525,162 500,175 505,162" fill="#fff7c2"/>
+
+    <!-- THE TOE SKIN LAYER (Lower half of the camera) -->
+    <path d="M 223,320 
+             C 223,320 230,410 260,440
+             C 290,470 330,496 400,496 
+             C 470,496 510,470 540,440
+             C 570,410 577,320 577,320
+             L 577,410
+             C 577,465 530,497 470,497
+             L 330,497
+             C 270,497 223,465 223,410
+             Z" 
+          fill="url(#skin-grad)"/>
+    
+    <!-- Cutout line masking the skin-to-metal boundary -->
+    <path d="M 223,320 C 270,350 530,350 577,320" fill="none" stroke="#7a5343" stroke-width="4" opacity="0.4"/>
+
+    <!-- THE LENS / TOENAIL HYBRID -->
+    <!-- Outer Lens Ring (Camera Structure) -->
+    <circle cx="400" cy="310" r="130" fill="url(#lens-ring)" stroke="#151821" stroke-width="6"/>
+    <circle cx="400" cy="310" r="115" fill="none" stroke="#6b7585" stroke-width="3" stroke-dasharray="10, 6"/>
+
+    <!-- Lens Glass / Aperture Area -->
+    <circle cx="400" cy="310" r="95" fill="url(#lens-glass)" stroke="#000000" stroke-width="4"/>
+
+    <!-- TOENAIL PLATE (Layered inside the lens context) -->
+    <!-- The nail shape scales out of the lens bottom, blending the concepts -->
+    <g>
+      <!-- Cutout clip path to keep nail shape organic -->
+      <path d="M 320,290 
+               C 310,360 325,395 400,395 
+               C 475,395 490,360 480,290 
+               C 475,250 450,240 400,240
+               C 350,240 325,250 320,290 Z" 
+            fill="url(#nail-grad)" stroke="#cb9b9d" stroke-width="3"/>
+      
+      <!-- Free edge of the nail (The white tip at the top of the nail) -->
+      <path d="M 321,280 C 345,252 455,252 479,280 C 475,248 450,242 400,242 C 350,242 325,248 321,280 Z" fill="#ffffff" opacity="0.9"/>
+      
+      <!-- Lunula (The white crescent at the nail base) -->
+      <path d="M 370,390 C 385,378 415,378 430,390 C 420,395 380,395 370,390 Z" fill="#ffffff" opacity="0.6"/>
+    </g>
+
+    <!-- CAMERA LENS REFLECTIONS & DETAILS (Overlaid on the whole central element) -->
+    <!-- Aperture Blades Blades (Subtle) -->
+    <path d="M 335,260 L 370,235" stroke="#1a3d54" stroke-width="2" opacity="0.5" />
+    <path d="M 465,260 L 430,235" stroke="#1a3d54" stroke-width="2" opacity="0.5" />
+    <path d="M 485,330 L 465,360" stroke="#1a3d54" stroke-width="2" opacity="0.5" />
+    <path d="M 315,330 L 335,360" stroke="#1a3d54" stroke-width="2" opacity="0.5" />
+
+    <!-- Glossy Lens Flares (Gives the camera lens feel) -->
+    <ellipse cx="360" cy="270" rx="35" ry="15" transform="rotate(-30 360 270)" fill="#ffffff" opacity="0.4"/>
+    <circle cx="340" cy="250" r="6" fill="#ffffff" opacity="0.3"/>
+    
+    <ellipse cx="445" cy="350" rx="20" ry="8" transform="rotate(-30 445 350)" fill="#4fd1ff" opacity="0.25"/>
+    <ellipse cx="420" cy="370" rx="12" ry="5" transform="rotate(-30 420 370)" fill="#ff94b8" opacity="0.2"/>
+
+    <!-- Subtle Cuticle Shadow Line -->
+    <path d="M 312,310 C 315,375 330,405 400,405 C 470,405 485,375 488,310" fill="none" stroke="#5c382b" stroke-width="4" opacity="0.3"/>
+  </g>
+</svg>
